@@ -1,0 +1,14 @@
+{
+  "name": "swimtouchbackend",
+  "version": "1.0.0",
+  "description": "final project server side ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "mickael benaroch lior shahar beni valotker nikita bronshtein",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
