@@ -22,7 +22,7 @@ db.connect(config.db.connection.uri, (err) => {
         console.log('Unable to connect to MongoDB.')
         process.exit(1)
    }else{
-        app.listen(config.server.port, config.server.host, () => {
+        app.listen(config.server.port, () => {
             console.log(`app running on http://${config.server.host}:${config.server.port}`);
         });
    }
