@@ -1,10 +1,9 @@
 'use strict';
 
-var express = require('express'), 
+const express = require('express'), 
 app = express(),
-db = require('./models/db');
-
-const bodyParser = require('body-parser'),
+db = require('./models/db'),
+bodyParser = require('body-parser'),
 cors = require('cors'),
 config = require('./configuration/config');
 
