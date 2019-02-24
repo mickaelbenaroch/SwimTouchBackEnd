@@ -15,7 +15,7 @@ exports.signup = (email, password) => {
             
             user.insertOne({user: email, pwd: hash}, (err, result) => {
                 if(err)
-                    reject("error to signup  user or email")
+                    reject("error to signup user or ")
                 else    
                     response(true)
             })
@@ -28,17 +28,14 @@ exports.login = (email, password) => {
     return new Promise((res, rej) => {
         let user = db.get().collection('users');
         try {
-            user.findOne( { user : email}, (err, result) => {
-                if(err)
+            user.findOne({user:email}, (err, result) => {
+                if(err || result === null)
                     throw err;
 
                     bcrypt.compare(password, result.pwd, (err, response) => {
-                        if(err)
+                        if(err || response === false)
                             rej('Email or Password is incorrect');
-                
-                        if(response === false)
-                            rej('Email or Password is incorrect');
-                        else    
+                        else   
                             res(true);
                     });
             });   
