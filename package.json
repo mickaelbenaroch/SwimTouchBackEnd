@@ -4,16 +4,19 @@
   "description": "final project server side ",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "author": "mickael benaroch lior shahar beni valotker nikita bronshtein",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^3.0.4",
     "body-parser": "^1.18.3",
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "express-validator": "^5.3.1",
+    "mocha": "^6.0.1",
     "mongodb": "^3.1.13"
   }
 }

@@ -4,22 +4,30 @@ var db = require('./db');
 const bcrypt = require('bcrypt');
 
 //signup new user
-exports.signup = (email, password) => {
+exports.signup = (info, pwd) => {
     return new Promise(( res, rej) => {
         let reject = rej, response = res;
+        
+        let profile = db.get().collection('profile');
         let user = db.get().collection('users');
 
-        bcrypt.hash(password, 10, (err, hash) => {
+        bcrypt.hash(pwd, 10, (err, hash) => {
             if(err)
                 reject("error to signup  user or email")
-            
-            user.insertOne({user: email, pwd: hash}, (err, result) => {
+            user.insertOne({user: info.user, pwd: hash}, (err, result) => {
+                if(err)
+                    reject("error to signup user or ")
+                else    
+                    response(true)
+            });
+
+            profile.insertOne(info, (err, result) => {
                 if(err)
                     reject("error to signup user or ")
                 else    
                     response(true)
             })
-        });  
+        });
     });
 }
 

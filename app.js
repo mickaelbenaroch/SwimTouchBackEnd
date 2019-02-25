@@ -27,5 +27,8 @@ db.connect(config.db.connection.uri, (err) => {
    }
 });
 
+module.exports = app
+
+
 
 
