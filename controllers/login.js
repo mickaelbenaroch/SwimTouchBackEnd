@@ -17,7 +17,6 @@ route.post('/signup', check('user').isEmail(), check('pwd').isLength({ min: 8 })
         },
         pwd = req.body.pwd;
 
-
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(422).json({ errors: errors.array() });

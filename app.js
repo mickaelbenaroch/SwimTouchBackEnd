@@ -12,7 +12,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json({limit: '50mb'}));
 
 //enable cors
-app.use(cors());
+//CORS problem solved
+app.use((req, res, next) => { res.header("Access-Control-Allow-Origin", "*"); 
+res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept"); next(); });
 
 app.use(require('./controllers'))
 
