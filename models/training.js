@@ -25,3 +25,20 @@ exports.createTraining = (obj_training) => {
     });
 }
 
+//regular get traning (multi key)
+exports.getTraining = (obj_training) => {
+    return new Promise(( res, rej) => {
+        let training = db.get().collection('training');
+
+        training.find(obj_training).toArray((err, result) =>{
+            if(err || result === undefined || result.length == 0)
+                rej("error to get training")
+            else
+                res(result);
+        });
+        
+    }).catch(error => {
+        rej("error to get training")
+    });
+}
+

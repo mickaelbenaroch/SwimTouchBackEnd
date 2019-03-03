@@ -26,6 +26,26 @@ route.post('/', (req, res)=>{
     })
 });
 
+//regular get traning (multi key)
+route.post('/getTraining', (req, res)=>{
+    var obj_training = JSON.parse(JSON.stringify({
+        _id:        req.body._id,
+        date:       req.body.date, 
+        coach:      req.body.coach,
+        group:      req.body.group,
+        style:      req.body.style,
+        distance:   req.body.distance,
+    }));
+
+    training.getTraining(obj_training).then((data) => {
+        res.status(200).json({isTrue: true, training: data});   
+        res.end(); 
+    }).catch(err => {
+        res.json({isTrue: false, error: err})
+        res.status(500)
+        res.end()
+    })
+});
 
 
 module.exports = route
