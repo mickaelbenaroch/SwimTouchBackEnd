@@ -29,3 +29,21 @@ exports.getGroup = (group) => {
         });
     });
 }
+
+
+//regular get profile (multi key)
+exports.getProfile = (obj_profile) => {
+    return new Promise(( res, rej) => {
+        let profile = db.get().collection('profile');
+
+        profile.find(obj_profile).toArray((err, result) =>{
+            if(err || result === undefined || result.length == 0)
+                rej("error to get profiles")
+            else
+                res(result);
+        });
+        
+    }).catch(error => {
+        rej("error to get profiles")
+    });
+}
