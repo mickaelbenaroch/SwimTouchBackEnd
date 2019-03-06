@@ -5,7 +5,7 @@ var db = require('./db');
 //create new training & is records document
 exports.createTraining = (obj_training) => {
     return new Promise(( res, rej) => {
-        let training = db.get().collection('training');
+        let training = db.get().collection('Exercises');
         let records = db.get().collection('records');
         
         training.insertOne(obj_training, (err, result) => {
@@ -28,17 +28,17 @@ exports.createTraining = (obj_training) => {
 //regular get traning (multi key)
 exports.getTraining = (obj_training) => {
     return new Promise(( res, rej) => {
-        let training = db.get().collection('training');
+        let training = db.get().collection('Exercises');
 
         training.find(obj_training).toArray((err, result) =>{
             if(err || result === undefined || result.length == 0)
-                rej("error to get training")
+                rej("error to get Exercises")
             else
                 res(result);
         });
         
     }).catch(error => {
-        rej("error to get training")
+        rej("error to get Exercises")
     });
 }
 
