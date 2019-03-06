@@ -2,12 +2,12 @@
 
 const express = require('express'),
 route = express.Router(),
-training = require('../models/training'),
+exercise = require('../models/exercise'),
 uuidv4 = require('uuid/v4');
 
-//create new training
+//create new exercise
 route.post('/', (req, res)=>{
-    var obj_training = {
+    var obj_exercise = {
         _id:        uuidv4(),
         date:       req.body.date, 
         coach:      req.body.coach,
@@ -16,8 +16,8 @@ route.post('/', (req, res)=>{
         distance:   req.body.distance,
     };
 
-    training.createTraining(obj_training).then((data) => {
-        res.status(200).json({isTrue: true, training_id: data});   
+    exercise.createExercise(obj_exercise).then((data) => {
+        res.status(200).json({isTrue: true, exercise_id: data});   
         res.end(); 
     }).catch(err => {
         res.json({isTrue: false, error: err})
@@ -27,8 +27,8 @@ route.post('/', (req, res)=>{
 });
 
 //regular get traning (multi key)
-route.post('/getTraining', (req, res)=>{
-    var obj_training = JSON.parse(JSON.stringify({
+route.post('/getExercises', (req, res)=>{
+    var obj_exercise = JSON.parse(JSON.stringify({
         _id:        req.body._id,
         date:       req.body.date, 
         coach:      req.body.coach,
@@ -37,8 +37,8 @@ route.post('/getTraining', (req, res)=>{
         distance:   req.body.distance,
     }));
 
-    training.getTraining(obj_training).then((data) => {
-        res.status(200).json({isTrue: true, training: data});   
+    exercise.getExercises(obj_exercise).then((data) => {
+        res.status(200).json({isTrue: true, exercise: data});   
         res.end(); 
     }).catch(err => {
         res.json({isTrue: false, error: err})

@@ -2,35 +2,35 @@
 
 var db = require('./db'); 
 
-//create new training & is records document
-exports.createTraining = (obj_training) => {
+//create new exercise & is records document
+exports.createExercise = (obj_exercise) => {
     return new Promise(( res, rej) => {
-        let training = db.get().collection('Exercises');
+        let exercise = db.get().collection('Exercises');
         let records = db.get().collection('records');
         
-        training.insertOne(obj_training, (err, result) => {
+        exercise.insertOne(obj_exercise, (err, result) => {
             if(err)
                 throw err;
             else{
-                records.insertOne({_id: obj_training._id},(err, result) => {
+                records.insertOne({_id: obj_exercise._id},(err, result) => {
                     if(err)
                         throw err;
                     else    
-                        res(obj_training._id)
+                        res(obj_exercise._id)
                 });
             }
         });
     }).catch(error => {
-        rej("create new training faild")
+        rej("create new exercise faild")
     });
 }
 
 //regular get traning (multi key)
-exports.getTraining = (obj_training) => {
+exports.getExercises = (obj_exercise) => {
     return new Promise(( res, rej) => {
-        let training = db.get().collection('Exercises');
+        let exercise = db.get().collection('Exercises');
 
-        training.find(obj_training).toArray((err, result) =>{
+        exercise.find(obj_exercise).toArray((err, result) =>{
             if(err || result === undefined || result.length == 0)
                 rej("error to get Exercises")
             else
