@@ -52,3 +52,17 @@ exports.login = (email, password) => {
         }
     })
 }
+
+//user picture
+exports.picture = (email, picture) => {
+    return new Promise((res, rej) => {
+        let profile = db.get().collection('profile');
+         try {
+            profile.updateOne({"user":email},{$set: {"picture": picture}},(suc,err) => {
+                res(suc)
+            });
+        }catch (error) {
+            rej('error on pic upload');
+           }
+    })
+}

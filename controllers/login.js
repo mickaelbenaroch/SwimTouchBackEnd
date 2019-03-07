@@ -32,6 +32,18 @@ route.post('/signup', check('user').isEmail(), check('pwd').isLength({ min: 8 })
     });
 });
 
+//upload picture of user
+route.post('/upload', (req, res) => {
+        login.picture(req.body.email, req.body.picture).then((data) => {
+            res.status(200).json({isTrue: data});   
+            res.end(); 
+        }).catch((err) => {
+            res.json({isTrue: false, error: err})
+            res.status(500)
+            res.end()
+        });
+});
+
 //check user and password for login
 route.post('/', (req, res)=>{
     var user_query = req.body.email, 
