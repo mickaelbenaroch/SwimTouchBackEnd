@@ -25,3 +25,20 @@ exports.createTeam = (obj_team) => {
     });
 }
 
+//regular get profile (multi key)
+exports.getTeams = (obj_profile) => {
+    return new Promise(( res, rej) => {
+        let profile = db.get().collection('st-team');
+
+        profile.find(obj_profile).toArray((err, result) =>{
+            if(err || result === undefined || result.length == 0)
+                rej("error to get profiles")
+            else
+                res(result);
+        });
+        
+    }).catch(error => {
+        rej("error to get profiles")
+    });
+}
+

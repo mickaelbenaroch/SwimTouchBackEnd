@@ -2,15 +2,15 @@
 
 var db = require('./db'); 
 
-//create new exercise & is records document
+//create new exercise 
 exports.createExercise = (obj_exercise) => {
     return new Promise(( res, rej) => {
-        let exercise = db.get().collection('Exercises');
+        let exercise = db.get().collection('st-exercise');
         let records = db.get().collection('records');
         
         exercise.insertOne(obj_exercise, (err, result) => {
             if(err)
-                throw err;
+                throw err; 
             else{
                 records.insertOne({_id: obj_exercise._id},(err, result) => {
                     if(err)
@@ -28,7 +28,7 @@ exports.createExercise = (obj_exercise) => {
 //regular get traning (multi key)
 exports.getExercises = (obj_exercise) => {
     return new Promise(( res, rej) => {
-        let exercise = db.get().collection('Exercises');
+        let exercise = db.get().collection('st-exercise');
 
         exercise.find(obj_exercise).toArray((err, result) =>{
             if(err || result === undefined || result.length == 0)

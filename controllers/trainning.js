@@ -10,8 +10,9 @@ route.post('/', (req, res)=>{
     var obj_trainning = {
         _id:        uuidv4(),
         name:       req.body.name, 
-        coachmail:      req.body.coachmail,
-        exercises:      req.body.exercises,
+        coachmail:  req.body.coachmail,
+        exercises:  req.body.exercises,
+        team_id:    req.body.team_id
     };
 
     trainning.createTrainning(obj_trainning).then((data) => {

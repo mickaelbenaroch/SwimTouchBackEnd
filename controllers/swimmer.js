@@ -10,11 +10,11 @@ route.post('/', (req, res)=>{
     var obj_swimmer = {
         _id:        uuidv4(),
         name:       req.body.name, 
-        height:      req.body.height,
+        height:     req.body.height,
         group:      req.body.group,
-        age:      req.body.age,
-        coachmail:   req.body.coachmail,
-        picture: req.body.picture
+        age:        req.body.age,
+        coachmail:  req.body.coachmail,
+        picture:    req.body.picture
     };
 
     swimmer.createSwimmer(obj_swimmer).then((data) => {
