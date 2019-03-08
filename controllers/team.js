@@ -11,7 +11,7 @@ route.post('/', (req, res)=>{
         _id:        uuidv4(),
         name:       req.body.name, 
         coachmail:      req.body.coachmail,
-        exercises:      req.body.exercises,
+        swimmers:      req.body.swimmers,
     };
 
     team.createTeam(obj_team).then((data) => {
