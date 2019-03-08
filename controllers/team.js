@@ -24,15 +24,13 @@ route.post('/', (req, res)=>{
     })
 });
 
-//regular get traning (multi key)
+//regular get team (multi key)
 route.post('/getteams', (req, res)=>{
     var obj_team = JSON.parse(JSON.stringify({
         _id:        req.body._id,
-        date:       req.body.date, 
-        coach:      req.body.coach,
-        group:      req.body.group,
-        style:      req.body.style,
-        distance:   req.body.distance,
+        name:       req.body.name, 
+        coachmail:      req.body.coachmail,
+        swimmers:      req.body.swimmers,
     }));
 
     team.getTeams(obj_team).then((data) => {
