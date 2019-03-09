@@ -29,11 +29,11 @@ route.post('/', (req, res)=>{
 route.post('/getTrainnings', (req, res)=>{
     var obj_trainning = JSON.parse(JSON.stringify({
         _id:        req.body._id,
-        date:       req.body.date, 
-        coach:      req.body.coach,
-        group:      req.body.group,
-        style:      req.body.style,
-        distance:   req.body.distance,
+        name:       req.body.name, 
+        coachmail:      req.body.coachmail,
+        exercises:      req.body.exercises,
+        team_id:      req.body.team_id,
+
     }));
 
     trainning.getTrainnings(obj_trainning).then((data) => {
