@@ -45,7 +45,6 @@ exports.getTrainnings = (obj_trainning) => {
                     });
                 })
                 setTimeout(()=>{
-                    console.log(temparray);
                       for(var i = 0; i<result.length;i++){
                           for(var j = 0; j < result[i].team_id.swimmers.length; j++){
                             result[i].team_id.swimmers[j] = temparray[j];

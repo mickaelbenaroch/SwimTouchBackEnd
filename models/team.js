@@ -29,12 +29,29 @@ exports.createTeam = (obj_team) => {
 exports.getTeams = (obj_profile) => {
     return new Promise(( res, rej) => {
         let profile = db.get().collection('st-team');
-
+        let swimmers_obj = db.get().collection('st-swimmer');
         profile.find(obj_profile).toArray((err, result) =>{
             if(err || result === undefined || result.length == 0)
                 rej("error to get profiles")
-            else
-                res(result);
+            else{
+                var temparray = [];
+                result.forEach(res =>{
+                    res.swimmers.forEach(swimmer => {
+                        swimmers_obj.findOne({_id:swimmer}).then((obj) =>{
+                            swimmer = obj.name;
+                            temparray.push(obj.name);
+                        })
+                    });
+                })
+                setTimeout(()=>{
+                      for(var i = 0; i<result.length;i++){
+                          for(var j = 0; j < result[i].swimmers.length; j++){
+                            result[i].swimmers[j] = temparray[j];
+                          }
+                        }
+                    res(result); 
+                },3000) 
+            }
         });
         
     }).catch(error => {

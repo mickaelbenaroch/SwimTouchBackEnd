@@ -30,11 +30,11 @@ route.post('/', (req, res)=>{
 //regular get traning (multi key)
 route.post('/getswimmers', (req, res)=>{
     var obj_swimmer = JSON.parse(JSON.stringify({
-        _id:        req.body._id,
-        name:       req.body.name, 
+        _id:         req.body._id,
+        name:        req.body.name, 
         height:      req.body.height,
-        group:      req.body.group,
-        age:      req.body.age,
+        group:       req.body.group,
+        age:         req.body.age,
         coachmail:   req.body.coachmail,
         picture: req.body.picture
     }));
