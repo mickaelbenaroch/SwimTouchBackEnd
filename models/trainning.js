@@ -30,12 +30,30 @@ exports.createTrainning = (obj_trainning) => {
 exports.getTrainnings = (obj_trainning) => {
     return new Promise(( res, rej) => {
         let trainning = db.get().collection('st-trainning');
-
+        let swimmers_obj = db.get().collection('st-swimmer');
         trainning.find(obj_trainning).toArray((err, result) =>{
             if(err || result === undefined || result.length == 0)
-                rej("error to get trainnings")
-            else
-                res(result);
+            rej("error to get trainnings")
+            else{
+                var temparray = [];
+                result.forEach(res =>{
+                    res.team_id.swimmers.forEach(swimmer => {
+                        swimmers_obj.findOne({_id:swimmer}).then((obj) =>{
+                            swimmer = obj.name;
+                            temparray.push(obj.name);
+                        })
+                    });
+                })
+                setTimeout(()=>{
+                    console.log(temparray);
+                      for(var i = 0; i<result.length;i++){
+                          for(var j = 0; j < result[i].team_id.swimmers.length; j++){
+                            result[i].team_id.swimmers[j] = temparray[j];
+                          }
+                        }
+                    res(result); 
+                },3000) 
+            }
         });
         
     }).catch(error => {
