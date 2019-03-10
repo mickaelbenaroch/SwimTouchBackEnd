@@ -31,26 +31,26 @@ exports.getTeams = (obj_profile) => {
 
         let profile = db.get().collection('st-team');
         let swimmers_obj = db.get().collection('st-swimmer');
-        let result_obj;
+        let result_obj = [];
 
         profile.findOne(obj_profile, (err, result) =>{
 
             if(err || result === undefined || result.length == 0)
                 rej("error to get team");
             
-            result_obj = {
+            result_obj.push({
                 _id:   result._id,
                 name: result.name,
                 coachmail: result.coachmail,
                 swimmers: []
-            }
+            })
 
             swimmers_obj.find({_id: {$in: result.swimmers }}).toArray((error, data) => {
                 if(error)
                     rej("error to get team");
 
                 data.map((obj) => {
-                    result_obj.swimmers.push({
+                    result_obj[0].swimmers.push({
                         _id: obj._id,
                         name: obj.name
                     })
