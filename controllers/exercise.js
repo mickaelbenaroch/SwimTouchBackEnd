@@ -14,6 +14,8 @@ route.post('/', (req, res)=>{
         group:      req.body.group,
         style:      req.body.style,
         distance:   req.body.distance,
+        howMuchTouches: req.body.howMuchTouches,
+        routes:         req.body.routes
     };
 
     exercise.createExercise(obj_exercise).then((data) => {
@@ -29,12 +31,14 @@ route.post('/', (req, res)=>{
 //regular get traning (multi key)
 route.post('/getExercises', (req, res)=>{
     var obj_exercise = JSON.parse(JSON.stringify({
-        _id:        req.body._id,
-        date:       req.body.date, 
-        coach:      req.body.coach,
-        group:      req.body.group,
-        style:      req.body.style,
-        distance:   req.body.distance,
+        _id:            req.body._id,
+        date:           req.body.date, 
+        coach:          req.body.coach,
+        group:          req.body.group,
+        style:          req.body.style,
+        distance:       req.body.distance,
+        howMuchTouches: req.body.howMuchTouches,
+        routes:         req.body.routes
     }));
 
     exercise.getExercises(obj_exercise).then((data) => {
