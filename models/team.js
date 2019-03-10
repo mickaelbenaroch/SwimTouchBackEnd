@@ -25,37 +25,42 @@ exports.createTeam = (obj_team) => {
     });
 }
 
-//regular get profile (multi key)
+//regular get team (multi key)
 exports.getTeams = (obj_profile) => {
     return new Promise(( res, rej) => {
+
         let profile = db.get().collection('st-team');
         let swimmers_obj = db.get().collection('st-swimmer');
-        profile.find(obj_profile).toArray((err, result) =>{
+        let result_obj;
+
+        profile.findOne(obj_profile, (err, result) =>{
+
             if(err || result === undefined || result.length == 0)
-                rej("error to get profiles")
-            else{
-                var temparray = [];
-                result.forEach(res =>{
-                    res.swimmers.forEach(swimmer => {
-                        swimmers_obj.findOne({_id:swimmer}).then((obj) =>{
-                            swimmer = obj.name;
-                            temparray.push(obj.name);
-                        })
-                    });
-                })
-                setTimeout(()=>{
-                      for(var i = 0; i<result.length;i++){
-                          for(var j = 0; j < result[i].swimmers.length; j++){
-                            result[i].swimmers[j] = temparray[j];
-                          }
-                        }
-                    res(result); 
-                },3000) 
+                rej("error to get team");
+            
+            result_obj = {
+                _id:   result._id,
+                name: result.name,
+                coachmail: result.coachmail,
+                swimmers: []
             }
+
+            swimmers_obj.find({_id: {$in: result.swimmers }}).toArray((error, data) => {
+                if(error)
+                    rej("error to get team");
+
+                data.map((obj) => {
+                    result_obj.swimmers.push({
+                        _id: obj._id,
+                        name: obj.name
+                    })
+                });
+                res(result_obj)
+            });
         });
         
     }).catch(error => {
-        rej("error to get profiles")
+        rej("error to get team")
     });
 }
 
