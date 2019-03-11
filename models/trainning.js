@@ -29,35 +29,45 @@ exports.createTrainning = (obj_trainning) => {
 //regular get traning (multi key)
 exports.getTrainnings = (obj_trainning) => {
     return new Promise(( res, rej) => {
-
         let trainning = db.get().collection('st-trainning');
         let swimmers_obj = db.get().collection('st-swimmer');
-        
-        trainning.find(obj_trainning).toArray((err, result) =>{
+        let exercise = db.get().collection('st-exercise');
+        let result_obj = [];
+
+        trainning.findOne(obj_trainning, (err, result) =>{
+
             if(err || result === undefined || result.length == 0)
-            rej("error to get trainnings")
-            else{
-                var temparray = [];
-                result.forEach(res =>{
-                    res.team_id.swimmers.forEach(swimmer => {
-                        swimmers_obj.findOne({_id:swimmer}).then((obj) =>{
-                            swimmer = obj.name;
-                            temparray.push(obj.name);
-                        })
-                    });
-                })
-                setTimeout(()=>{
-                      for(var i = 0; i<result.length;i++){
-                          for(var j = 0; j < result[i].team_id.swimmers.length; j++){
-                            result[i].team_id.swimmers[j] = temparray[j];
-                          }
-                        }
-                    res(result); 
-                },3000) 
-            }
+                rej("error to get team");
+            
+            result_obj.push({
+                _id:   result._id,
+                name: result.name,
+                coachmail: result.coachmail,
+                exercises: [],
+                team_id: result.team_id,
+            })
+
+            exercise.find({_id: {$in: result.exercises }}).toArray((error, data) => {
+                if(error)
+                    rej("error to get team");
+
+                data.map((obj) => {
+                    result_obj[0].exercises.push({
+                        _id: obj._id,
+                        date: obj.date,
+                        coach: obj.coach,
+                        group: obj.group,
+                        style: obj.style,
+                        distance: obj.distance,
+                        howMuchTouches: obj.howMuchTouches,
+                        routes: obj.routes
+                    })
+                });
+                res(result_obj)
+            });
         });
         
     }).catch(error => {
-        rej("error to get trainnings")
+        rej("error to get exercises")
     });
 }
