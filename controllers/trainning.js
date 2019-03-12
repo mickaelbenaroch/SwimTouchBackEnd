@@ -33,7 +33,6 @@ route.post('/getTrainnings', (req, res)=>{
         coachmail:      req.body.coachmail,
         exercises:      req.body.exercises,
         team_id:      req.body.team_id,
-
     }));
 
     trainning.getTrainnings(obj_trainning).then((data) => {
