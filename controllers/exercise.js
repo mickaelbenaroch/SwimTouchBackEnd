@@ -28,7 +28,7 @@ route.post('/', (req, res)=>{
     })
 });
 
-//regular get traning (multi key)
+//regular get exercises (multi key)
 route.post('/getExercises', (req, res)=>{
     var obj_exercise = JSON.parse(JSON.stringify({
         _id:            req.body._id,
