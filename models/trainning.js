@@ -31,31 +31,31 @@ exports.getTrainnings = (obj_trainning) => {
     return new Promise(( res, rej) => {
         let trainning = db.get().collection('st-trainning');
         let swimmers_obj = db.get().collection('st-swimmer');
-        trainning.find(obj_trainning).toArray((err, result) =>{
-            if(err || result === undefined || result.length == 0)
-            rej("error to get trainnings")
-            else{
-                var temparray = [];
-                result.forEach(res =>{
-                    res.team_id.swimmers.forEach(swimmer => {
-                        swimmers_obj.findOne({_id:swimmer}).then((obj) =>{
-                            swimmer = obj.name;
-                            temparray.push(obj.name);
-                        })
-                    });
-                })
-                setTimeout(()=>{
-                      for(var i = 0; i<result.length;i++){
-                          for(var j = 0; j < result[i].team_id.swimmers.length; j++){
-                            result[i].team_id.swimmers[j] = temparray[j];
-                          }
-                        }
-                    res(result); 
-                },3000) 
-            }
-        });
+        let exercise = db.get().collection('st-exercise');
+        let result_obj = [];
+
+         trainning.find({coachmail:obj_trainning.coachmail}).toArray().then( items => {
+          items.forEach((item)=>{
+              let temp = {
+                  coachmail: item.coachmail,
+                  exercises: item.exercises,
+                  name: item.name,
+                  team_id: item.team_id,
+                  _id: item._id
+              };
+            //במקום כל החרא הזה, שמרתי את כל התרגיל כולו לתוך אימון בדאטה בייז ככה לא צריך לולאות
+            //   item.exercises.forEach(ex => {
+            //       exercise.findOne({_id: ex}).then((data)=>{
+            //           temp.exercises.push(data);
+            //       })
+            // });
+            result_obj.push(temp);
+          })
+            res(result_obj)
+        })
         
     }).catch(error => {
-        rej("error to get trainnings")
+        rej("error to get exercises")
     });
+    
 }
