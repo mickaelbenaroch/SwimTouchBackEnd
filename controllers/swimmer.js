@@ -27,7 +27,7 @@ route.post('/', (req, res)=>{
     })
 });
 
-//regular get traning (multi key)
+//regular get swimmer (multi key)
 route.post('/getswimmers', (req, res)=>{
     var obj_swimmer = JSON.parse(JSON.stringify({
         _id:         req.body._id,

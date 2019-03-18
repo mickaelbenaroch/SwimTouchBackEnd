@@ -32,7 +32,7 @@ route.post('/getGroup', (req, res)=>{
     })
 });
 
-//get all profile by filter
+//get all profile by key object
 route.post('/getProfile', (req, res)=>{
     var obj_profile = JSON.parse(JSON.stringify({
         user:       req.body.user,

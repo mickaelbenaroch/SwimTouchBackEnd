@@ -4,7 +4,7 @@ const express = require('express'),
 route = express.Router(),
 recor = require('../models/records');
 
-//signup new user
+//set new records
 route.post('/setrecords', (req, res) => {
         var record = {
             now_date:     req.now_date,

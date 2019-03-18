@@ -24,7 +24,7 @@ route.post('/', (req, res)=>{
     })
 });
 
-//regular get team (multi key)
+//regular get team (multi key object)
 route.post('/getteams', (req, res)=>{
     var obj_team = JSON.parse(JSON.stringify({
         _id:        req.body._id,
