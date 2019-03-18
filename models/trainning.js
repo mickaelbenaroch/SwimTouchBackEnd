@@ -35,23 +35,23 @@ exports.getTrainnings = (obj_trainning) => {
         let result_obj = [];
 
          trainning.find({coachmail:obj_trainning.coachmail}).toArray().then( items => {
-          items.forEach((item)=>{
-              let temp = {
-                  coachmail: item.coachmail,
-                  exercises: item.exercises,
-                  name: item.name,
-                  team_id: item.team_id,
-                  _id: item._id
-              };
+        //   items.forEach((item)=>{
+        //       let temp = {
+        //           coachmail: item.coachmail,
+        //           exercises: item.exercises,
+        //           name: item.name,
+        //           team_id: item.team_id,
+        //           _id: item._id
+        //       };
             //במקום כל החרא הזה, שמרתי את כל התרגיל כולו לתוך אימון בדאטה בייז ככה לא צריך לולאות
             //   item.exercises.forEach(ex => {
             //       exercise.findOne({_id: ex}).then((data)=>{
             //           temp.exercises.push(data);
             //       })
             // });
-            result_obj.push(temp);
-          })
-            res(result_obj)
+           // result_obj.push(temp);
+           res(items)
+          //})
         })
         
     }).catch(error => {
