@@ -10,8 +10,6 @@ router.use('/trainning', require('./trainning'))
 router.use('/swimmer', require('./swimmer'))
 router.use('/team', require('./team'))
 router.use('/records', require('./records'))
-
-
-
+router.use('/statistic', require('./statistic'))
 
 module.exports = router
