@@ -7,13 +7,12 @@ recor = require('../models/records');
 //set new records
 route.post('/setrecords', (req, res) => {
         var record = {
-            now_date:     req.now_date,
-            exercise_id:  req.body.exercise_id,
-            route:        req.body.route, 
-            start_time:   req.body.start_time,
-            jump_time:    req.body.jump_time,
-            times:        req.body.times,
-            notes:        req.body.notes,
+            _id:         req.body._id,
+            date:        req.body.date,
+            jump_time:   req.body.jump_time,
+            results:     req.body.results,
+            swimmer:     req.body.swimmer,
+            exercise_id: req.body.exercise_id
         };
 
         recor.setRecords(record).then((data) => {
