@@ -8,7 +8,6 @@ exports.setRecords = (records) => {
         let reject = rej, response = res;
         
         let record = db.get().collection('st-record');
-        let exercise = db.get().collection('st-exercise');
 
         record.insertOne(records, (err, result) => {
                 if(err)
