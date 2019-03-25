@@ -5,10 +5,10 @@ route = express.Router(),
 records = require('../models/statistic'),
 { check, validationResult } = require('express-validator/check');
 
-//get user records by date (start_date & swimmer name is require, end_date is optional)
+//get all swimmer records (swimmer is require)
 route.get('/swimmer', check('swimmer_ref').not().isEmpty() ,(req, res)=>{
 
-    records.getStatisticRecords(obj_records).then((data) => {
+    records.getStatisticByswimmer(req.body.swimmer_ref).then((data) => {
         res.status(200).json({isTrue: true, records: data});   
         res.end(); 
     }).catch(err => {
