@@ -40,8 +40,7 @@ exports.getTeams = () => {
                     if(error)
                         rej("error to get team")
 
-                    resultNext[i].swimmers.splice(0);  
-                    resultNext[i].swimmers.push(data); 
+                    resultNext[i].swimmers.splice(0, resultNext[i].swimmers.length, ...data);
                     temp++;
                     
                     if(resultNext.length === temp)
