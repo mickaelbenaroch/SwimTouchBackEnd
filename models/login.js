@@ -63,6 +63,6 @@ exports.picture = (email, picture) => {
             });
         }catch (error) {
             rej('error on pic upload');
-           }
+        }
     })
 }

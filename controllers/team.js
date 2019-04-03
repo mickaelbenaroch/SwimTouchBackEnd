@@ -25,15 +25,8 @@ route.post('/', (req, res)=>{
 });
 
 //regular get team (multi key object)
-route.post('/getteams', (req, res)=>{
-    var obj_team = JSON.parse(JSON.stringify({
-        _id:        req.body._id,
-        name:       req.body.name, 
-        coachmail:      req.body.coachmail,
-        swimmers:      req.body.swimmers,
-    }));
-
-    team.getTeams(obj_team).then((data) => {
+route.get('/getteams', (req, res)=>{
+    team.getTeams().then((data) => {
         res.status(200).json({isTrue: true, team: data});   
         res.end(); 
     }).catch(err => {

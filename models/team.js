@@ -20,44 +20,35 @@ exports.createTeam = (obj_team) => {
 }
 
 //regular get team (multi key)
-exports.getTeams = (obj_team) => {
-    return new Promise(( res, rej) => {
-
+exports.getTeams = () => {
+    return new Promise(function(resolve, reject) {
         let team = db.get().collection('st-team');
-        let swimmers_obj = db.get().collection('st-swimmer');
-        let result_obj = [];
-
-        team.findOne(obj_team, (err, result) =>{
-
-            if(err || result === undefined || result == null){
-                res(result_obj);
-            }
-            
-            else{
-                result_obj.push({
-                    _id:   result._id,
-                    name: result.name,
-                    coachmail: result.coachmail,
-                    swimmers: []
-                })
     
-                swimmers_obj.find({_id: {$in: result.swimmers }}).toArray((error, data) => {
-                    if(error)
-                        rej("error to get team");
-    
-                    data.map((obj) => {
-                        result_obj[0].swimmers.push({
-                            _id: obj._id,
-                            name: obj.name
-                        })
-                    });
-                    res(result_obj)
-                });
-            }
+        team.find({}).toArray((err, result) => {
+            if(err || result === undefined || result.length == 0)
+                reject("error to get team")         
+            resolve(result);
         });
-        
-    }).catch(error => {
-        rej("error to get team")
+    }).then(resultNext => {
+  
+       let swimmers = db.get().collection('st-swimmer');
+       let temp = 0;
+
+        return new Promise((res, rej) => {
+            resultNext.map((obj, i) => {
+                swimmers.find({_id: {$in: obj.swimmers}}).toArray((error, data) => {
+                    if(error)
+                        rej("error to get team")
+
+                    resultNext[i].swimmers.splice(0);  
+                    resultNext[i].swimmers.push(data); 
+                    temp++;
+                    
+                    if(resultNext.length === temp)
+                        res(resultNext)
+                    });
+            });
+        });    
     });
 }
 
