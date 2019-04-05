@@ -19,7 +19,7 @@ exports.createTeam = (obj_team) => {
     });
 }
 
-//regular get team (multi key)
+//get all team
 exports.getTeams = () => {
     return new Promise(function(resolve, reject) {
         let team = db.get().collection('st-team');
@@ -51,3 +51,31 @@ exports.getTeams = () => {
     });
 }
 
+
+//get team by coach mail
+exports.team = (coach) => {
+    return new Promise(function(resolve, reject) {
+
+        let team = db.get().collection('st-team');
+
+        team.findOne({coachmail: coach}, (err, result) => {
+            if(err || result === undefined)
+                reject("error to get team")         
+            resolve(result);
+        });
+    }).then(resultNext => {
+        let swimmers = db.get().collection('st-swimmer');
+
+        return new Promise((res, rej) => {
+            swimmers.find({_id: {$in: resultNext.swimmers}}).toArray((error, data) => {
+                
+                if(error|| data == undefined) 
+                    rej("error to get team")
+            
+                resultNext.swimmers.splice(0, resultNext.swimmers.length, ...data);
+                res(resultNext)
+            });
+           
+        });    
+    });
+}

@@ -24,9 +24,24 @@ route.post('/', (req, res)=>{
     })
 });
 
-//regular get team (multi key object)
+//get all team
 route.get('/getteams', (req, res)=>{
     team.getTeams().then((data) => {
+        res.status(200).json({isTrue: true, team: data});   
+        res.end(); 
+    }).catch(err => {
+        res.json({isTrue: false, error: err})
+        res.status(500)
+        res.end()
+    })
+});
+
+//get team by coach mail
+route.get('/team', (req, res)=>{
+
+    let coach = req.body.coachmail
+
+    team.team(coach).then((data) => {
         res.status(200).json({isTrue: true, team: data});   
         res.end(); 
     }).catch(err => {
