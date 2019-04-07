@@ -4,7 +4,7 @@ const express = require('express'),
 route = express.Router(),
 profile = require('../models/profile');
 
-//get user profile
+//get user profile by email (1 profile get)
 route.post('/', (req, res)=>{
     var user_query = req.body.email;
 
@@ -18,7 +18,7 @@ route.post('/', (req, res)=>{
     })
 });
 
-//get all profile by group
+//get all profile by group (all group profile)
 route.post('/getGroup', (req, res)=>{
     var group_query = req.body.group;
 
@@ -32,7 +32,7 @@ route.post('/getGroup', (req, res)=>{
     })
 });
 
-//get all profile by key object
+//get all profile by key object (like a filter)
 route.post('/getProfile', (req, res)=>{
     var obj_profile = JSON.parse(JSON.stringify({
         user:       req.body.user,
