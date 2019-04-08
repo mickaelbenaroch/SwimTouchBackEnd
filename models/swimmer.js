@@ -20,7 +20,7 @@ exports.createSwimmer = (obj_swimmer) => {
     });
 }
 
-//regular get traning (multi key)
+//regular get swimmer (filter)
 exports.getSwimmers = (obj_swimmer) => {
     return new Promise(( res, rej) => {
         let swimmer = db.get().collection('st-swimmer');
