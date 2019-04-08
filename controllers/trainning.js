@@ -13,7 +13,7 @@ route.post('/', (req, res)=>{
         coachmail:  req.body.coachmail,
         exercises:  req.body.exercises,
         team_id:    req.body.team_id,
-        date:       req.body.team
+        date:       req.body.date
     };
 
     trainning.createTrainning(obj_trainning).then((data) => {
