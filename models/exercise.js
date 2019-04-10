@@ -46,10 +46,23 @@ exports.getExercises = (obj_exercise) => {
 exports.updateExercises = (obj_exercise) => {
     return new Promise(( res, rej) => {
         let exercise = db.get().collection('st-exercise');
-        console.log("tsst " +obj_exercise.id)
-        exercise.updateOne({"_id": obj_exercise.id}, {"$set": {"routes": obj_exercise.routes}}).then(data =>{
-            res(data);
-        })
+        let trainning = db.get().collection('st-trainning');
+        //update the exercise itself
+        exercise.updateOne({"_id": obj_exercise.id}, {"$set": {"routes": obj_exercise.routes}}).then(response =>{
+            //update the exercise into the trainnig 
+            trainning.findOne({ "exercises.id": obj_exercise.id}).then(data =>{
+                data.exercises.forEach(element => {
+                   if(element.id == obj_exercise.id){
+                       element.routes = obj_exercise.routes;
+                       var trainning_id = data._id;
+                       trainning.updateOne({"_id":trainning_id},{"$set":{"exercises": data.exercises}}).then(ress =>{
+                           res(ress);
+                       })
+                   }
+                });
+            })
+        });
+
     }).catch(error => {
         rej("error to get Exercises")
     });
