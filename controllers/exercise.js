@@ -51,5 +51,28 @@ route.post('/getExercises', (req, res)=>{
     })
 });
 
+//regular get exercises (filter)
+route.post('/updateExercise', (req, res)=>{
+    var obj_exercise = JSON.parse(JSON.stringify({
+        id:            req.body.id,
+        date:           req.body.date, 
+        coach:          req.body.coach,
+        group:          req.body.group,
+        style:          req.body.style,
+        distance:       req.body.distance,
+        howMuchTouches: req.body.howMuchTouches,
+        routes:         req.body.routes
+    }));
+
+    exercise.updateExercises(obj_exercise).then((data) => {
+        res.status(200).json({isTrue: true, exercise: data});   
+        res.end(); 
+    }).catch(err => {
+        res.json({isTrue: false, error: err})
+        res.status(500)
+        res.end()
+    })
+});
+
 
 module.exports = route
