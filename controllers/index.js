@@ -11,5 +11,6 @@ router.use('/swimmer', require('./swimmer'))
 router.use('/team', require('./team'))
 router.use('/records', require('./records'))
 router.use('/statistic', require('./statistic'))
+router.use('/target', require('./target'))
 
 module.exports = router
