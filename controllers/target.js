@@ -9,11 +9,11 @@ uuidv4 = require('uuid/v4');
 route.post('/swimmertarget', (req, res)=>{
     var obj_swimmer_target = {
         _id:            uuidv4(),
-        distance:       req.body.Distance, 
-        target:         req.body.TargetTime,
-        triesToImprove: req.body.TriesToImprove,
-        style:          req.body.Style,
-        swimmer_ref:    req.body.Swimmer_ref
+        distance:       req.body.distance, 
+        target:         req.body.targetTime,
+        triesToImprove: req.body.triesToImprove,
+        style:          req.body.style,
+        swimmer_ref:    req.body.swimmer_ref
    };
 
     swimmer.createSwimmerTarget(obj_swimmer_target).then((data) => {
@@ -29,7 +29,7 @@ route.post('/swimmertarget', (req, res)=>{
 //regular get swimmer (filter)
 route.post('/getswimmertarget', (req, res)=>{
     var obj_swimmer_target = JSON.parse(JSON.stringify({
-            swimmer_ref:    req.body.Swimmer_ref
+            swimmer_ref:    req.body.swimmer_ref
     }));
 
     swimmer.getSwimmerTarget(obj_swimmer_target).then((data) => {
