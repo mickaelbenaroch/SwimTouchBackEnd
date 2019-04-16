@@ -13,6 +13,7 @@ route.post('/swimmertarget', (req, res)=>{
         target:         req.body.targetTime,
         triesToImprove: req.body.triesToImprove,
         style:          req.body.style,
+        targetTime:     req.body.targetTime,
         swimmer_ref:    req.body.swimmer_ref
    };
 
