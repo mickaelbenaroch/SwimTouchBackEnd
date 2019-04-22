@@ -13,3 +13,5 @@
 17:49:58.319 ERROR 'undefined' Failed to Login, Email or Password is incorrect 2019-04-22T14:49:58.319Z 
 17:50:29.608 ERROR '' Failed to Login, Email or Password is incorrect 2019-04-22T14:50:29.608Z 
 17:50:53.235 INFO  'valotkerbeni@gmail.com' Login to SwimTouch 2019-04-22T14:50:53.235Z 
+17:52:39.865 INFO  app running on http://localhost:3030 2019-04-22T14:52:39.865Z 
+17:57:14.429 INFO  app running on http://localhost:3030 2019-04-22T14:57:14.429Z 

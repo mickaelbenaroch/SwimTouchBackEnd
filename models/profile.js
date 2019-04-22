@@ -42,8 +42,5 @@ exports.getProfile = (obj_profile) => {
             else
                 res(result);
         });
-        
-    }).catch(error => {
-        rej("error to get profiles")
     });
 }
