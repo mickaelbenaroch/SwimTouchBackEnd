@@ -24,7 +24,7 @@ exports.signup = (info, pwd) => {
                     reject("error to signup user or ")
                 }
                 else{
-                    log.log_info(`New User is Signup: '${info.user}' `);
+                    log.log_info(`New User is Signup: '${info.user}' (Insert to users db) `);
                     response(true)
                 }
             });
@@ -35,7 +35,7 @@ exports.signup = (info, pwd) => {
                     reject("error to signup user or ")
                 }
                 else{
-                    log.log_info(`New User is Signup: '${info.user}' `);
+                    log.log_info(`New User is Signup: '${info.user}' (Insert to profile db) `);
                     response(true)
                 }    
             })
@@ -79,9 +79,11 @@ exports.picture = (email, picture) => {
         let profile = db.get().collection('profile');
          try {
             profile.updateOne({"user":email},{$set: {"picture": picture}},(suc,err) => {
+                log.log_info(`'${email}' - Upload new picture `);
                 res(suc)
             });
         }catch (error) {
+            log.log_error(`'${email}' - Upload picture failed `);
             rej('error on pic upload');
         }
     })

@@ -1,25 +1,15 @@
-17:14:41.292 INFO  app running on http://localhost:3030 2019-04-22T14:14:41.292Z 
-17:16:07.175 INFO  app running on http://localhost:3030 2019-04-22T14:16:07.175Z 
-17:16:10.902 INFO  app running on http://localhost:3030 2019-04-22T14:16:10.902Z 
-17:16:19.066 INFO  app running on http://localhost:3030 2019-04-22T14:16:19.065Z 
-17:16:43.705 INFO  app running on http://localhost:3030 2019-04-22T14:16:43.704Z 
-17:23:54.517 INFO  app running on http://localhost:3030 2019-04-22T14:23:54.517Z 
-17:31:02.257 INFO  app running on http://localhost:3030 2019-04-22T14:31:02.257Z 
-17:31:29.377 INFO  app running on http://localhost:3030 2019-04-22T14:31:29.377Z 
-17:31:29.504 ERROR Signup new user - 2019-04-22T14:31:29.504Z 
-17:32:54.464 INFO  app running on http://localhost:3030 2019-04-22T14:32:54.464Z 
-17:33:13.668 INFO  app running on http://localhost:3030 2019-04-22T14:33:13.668Z 
-17:33:49.450 INFO  app running on http://localhost:3030 2019-04-22T14:33:49.450Z 
-17:33:50.872 ERROR Signup new user - undefined 2019-04-22T14:33:50.872Z 
-17:34:35.840 INFO  app running on http://localhost:3030 2019-04-22T14:34:35.840Z 
-17:34:36.108 ERROR Signup new user - undefined 2019-04-22T14:34:36.108Z 
-17:34:54.087 INFO  app running on http://localhost:3030 2019-04-22T14:34:54.087Z 
-17:34:54.440 ERROR Signup new user - undefined 2019-04-22T14:34:54.440Z 
-17:35:22.677 INFO  app running on http://localhost:3030 2019-04-22T14:35:22.677Z 
-17:35:22.954 ERROR Signup new user - undefined 2019-04-22T14:35:22.954Z 
-17:35:48.832 INFO  app running on http://localhost:3030 2019-04-22T14:35:48.832Z 
-17:35:49.231 ERROR Signup new user - undefined 2019-04-22T14:35:49.231Z 
-17:36:28.738 INFO  app running on http://localhost:3030 2019-04-22T14:36:28.737Z 
-17:36:30.921 ERROR Signup new user - undefined 2019-04-22T14:36:30.921Z 
-17:36:51.613 INFO  app running on http://localhost:3030 2019-04-22T14:36:51.613Z 
-17:36:52.145 ERROR Signup new user - undefined 2019-04-22T14:36:52.145Z 
+
+17:44:28.967 INFO  app running on http://localhost:3030 2019-04-22T14:44:28.967Z 
+17:44:29.586 ERROR Signup new user - Incorrect user, value = undefined 2019-04-22T14:44:29.586Z 
+17:44:54.917 INFO  app running on http://localhost:3030 2019-04-22T14:44:54.917Z 
+17:44:55.325 ERROR Signup new user - Incorrect user, value = beni 2019-04-22T14:44:55.325Z 
+17:45:05.125 ERROR Signup new user - Incorrect user, value = beni@ 2019-04-22T14:45:05.125Z 
+17:46:15.408 ERROR Signup new user - Incorrect user, value = beni@valoket 2019-04-22T14:46:15.408Z 
+17:46:27.339 INFO  New User is Signup: 'beni@valoket.com' 2019-04-22T14:46:27.339Z 
+17:46:28.453 INFO  New User is Signup: 'beni@valoket.com' 2019-04-22T14:46:28.453Z 
+17:47:49.682 INFO  app running on http://localhost:3030 2019-04-22T14:47:49.682Z 
+17:47:53.941 ERROR Signup new user - beni@valoket.com 2019-04-22T14:47:53.941Z 
+17:47:55.034 ERROR Signup new user - beni@valoket.com 2019-04-22T14:47:55.034Z 
+17:49:58.319 ERROR 'undefined' Failed to Login, Email or Password is incorrect 2019-04-22T14:49:58.319Z 
+17:50:29.608 ERROR '' Failed to Login, Email or Password is incorrect 2019-04-22T14:50:29.608Z 
+17:50:53.235 INFO  'valotkerbeni@gmail.com' Login to SwimTouch 2019-04-22T14:50:53.235Z 

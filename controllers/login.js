@@ -19,10 +19,11 @@ route.post('/signup', check('user').isEmail(), check('pwd').isLength({ min: 8 })
     pwd = req.body.pwd;
 
     const errors = validationResult(req);
-    console.log(errors.array())
+    let validate_array = errors.array();
+    
     if (!errors.isEmpty()) {
-        log.log_error(`Signup new user - ${errors.array().param} `);
-        return res.status(422).json({ errors: errors.array() });
+        log.log_error(`Signup new user - Incorrect ${validate_array[0].param}, value = ${validate_array[0].value} `);
+        return res.status(422).json({ errors: validate_array });
     }
 
     login.signup(profile, pwd).then((data) => {
