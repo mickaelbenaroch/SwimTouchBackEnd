@@ -34,23 +34,24 @@ exports.signup = (info, pwd) => {
 //user login
 exports.login = (email, password) => {
     return new Promise((res, rej) => {
-        let user = db.get().collection('users');
-        try {
-            user.findOne({user:email}, (err, result) => {
-                if(err || result === null)
-                    throw err;
 
-                    bcrypt.compare(password, result.pwd, (err, response) => {
-                        if(err || response === false)
-                            rej('Email or Password is incorrect');
-                        else   
-                            res(true);
-                    });
-            });   
-        } catch (error) {
-            rej('Email or Password is incorrect');
-        }
+        let user = db.get().collection('users');
+
+        user.findOne({user:email}, (err, result) => {
+            if(err || result === null || result === undefined)
+                rej('Email or Password is incorrect');
+            else{
+                bcrypt.compare(password, result.pwd, (err, response) => {
+                    if(err || response === false)
+                        rej('Email or Password is incorrect');
+                    else   
+                        res(true);
+                });
+            }
+        });   
     })
+
+    
 }
 
 //user picture

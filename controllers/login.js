@@ -44,7 +44,7 @@ route.post('/upload', (req, res) => {
     });
 });
 
-//check user and password for login
+//check user and password for user login
 route.post('/', (req, res)=>{
     var user_query = req.body.email, 
         pass_query = req.body.pass

@@ -26,7 +26,7 @@ db.connect(config.db.connection.uri, (err) => {
    }else{
         app.listen(config.server.port, () => {
             console.log(`app running on http://${config.server.host}:${config.server.port}`);
-            log.info(` app running on http://${config.server.host}:${config.server.port} ` , new Date().toJSON());
+            log.info(`app running on http://${config.server.host}:${config.server.port} ` , new Date().toJSON());
         });
    }
 });
