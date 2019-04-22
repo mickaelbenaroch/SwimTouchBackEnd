@@ -2,6 +2,7 @@
 
 var db = require('./db'); 
 const bcrypt = require('bcrypt');
+const log = require('../controllers/API/logger');
 
 //signup new user
 exports.signup = (info, pwd) => {
@@ -12,20 +13,31 @@ exports.signup = (info, pwd) => {
         let user = db.get().collection('users');
 
         bcrypt.hash(pwd, 10, (err, hash) => {
-            if(err)
+            if(err){
+                log.log_error(`Signup new user - ${info.user} `);
                 reject("error to signup  user or email")
+            }
+                
             user.insertOne({user: info.user, pwd: hash}, (err, result) => {
-                if(err)
+                if(err){
+                    log.log_error(`Signup new user - ${info.user} `);
                     reject("error to signup user or ")
-                else    
+                }
+                else{
+                    log.log_info(`New User is Signup: '${info.user}' `);
                     response(true)
+                }
             });
 
             profile.insertOne(info, (err, result) => {
-                if(err)
+                if(err){
+                    log.log_error(`Signup new user - ${info.user} `);
                     reject("error to signup user or ")
-                else    
+                }
+                else{
+                    log.log_info(`New User is Signup: '${info.user}' `);
                     response(true)
+                }    
             })
         });
     });
@@ -37,15 +49,22 @@ exports.login = (email, password) => {
 
         let user = db.get().collection('users');
 
-        user.findOne({user:email}, (err, result) => {
-            if(err || result === null || result === undefined)
+        user.findOne({user: email}, (err, result) => {
+            if(err || result === null || result === undefined){
+                log.log_error(`'${email}' Failed to Login, Email or Password is incorrect `);
                 rej('Email or Password is incorrect');
+            }
+                
             else{
                 bcrypt.compare(password, result.pwd, (err, response) => {
-                    if(err || response === false)
+                    if(err || response === false){
+                        log.log_error(`'${email}' Failed to Login, Email or Password is incorrect `);
                         rej('Email or Password is incorrect');
-                    else   
+                    }
+                    else{   
+                        log.log_info(`'${email}' Login to SwimTouch `);
                         res(true);
+                    }
                 });
             }
         });   

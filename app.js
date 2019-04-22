@@ -6,7 +6,7 @@ db = require('./models/db'),
 bodyParser = require('body-parser'),
 cors = require('cors'),
 config = require('./configuration/config'),
-log = require('simple-node-logger').createRollingFileLogger( config.logger );
+log = require('./controllers/API/logger');
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: true}));
@@ -21,12 +21,12 @@ app.use(require('./controllers'));
 db.connect(config.db.connection.uri, (err) => {
    if(err){
         console.log('Unable to connect to MongoDB.');
-        log.error (' Unable to connect to MongoDB. ', new Date().toJSON());
+        log.log_fatal(' Unable to connect to MongoDB. ');
         process.exit(1)
    }else{
         app.listen(config.server.port, () => {
             console.log(`app running on http://${config.server.host}:${config.server.port}`);
-            log.info(`app running on http://${config.server.host}:${config.server.port} ` , new Date().toJSON());
+            log.log_info(`app running on http://${config.server.host}:${config.server.port} `);
         });
    }
 });

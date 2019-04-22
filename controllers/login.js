@@ -4,6 +4,7 @@ const express = require('express'),
 route = express.Router(),
 login = require('../models/login');
 const { check, validationResult } = require('express-validator/check');
+const log = require('../controllers/API/logger');
 
 //signup new user
 route.post('/signup', check('user').isEmail(), check('pwd').isLength({ min: 8 }), (req, res) => {
@@ -18,7 +19,9 @@ route.post('/signup', check('user').isEmail(), check('pwd').isLength({ min: 8 })
     pwd = req.body.pwd;
 
     const errors = validationResult(req);
+    console.log(errors.array())
     if (!errors.isEmpty()) {
+        log.log_error(`Signup new user - ${errors.array().param} `);
         return res.status(422).json({ errors: errors.array() });
     }
 

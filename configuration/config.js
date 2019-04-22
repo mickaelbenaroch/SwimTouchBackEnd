@@ -11,7 +11,6 @@ module.exports = {
       }
     },
     logger: {
-      errorEventName: 'error',
       logDirectory: './logs',
       fileNamePattern:'roll-<DATE>.log',
       dateFormat:'YYYY.MM.DD'      
