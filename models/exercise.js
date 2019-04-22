@@ -10,18 +10,16 @@ exports.createExercise = (obj_exercise) => {
         
         exercise.insertOne(obj_exercise, (err, result) => {
             if(err)
-                throw err; 
+                rej("create new exercise faild")
             else{
                 records.insertOne({_id: obj_exercise._id},(err, result) => {
                     if(err)
-                        throw err;
+                        rej("create new exercise faild")
                     else    
                         res(obj_exercise._id)
                 });
             }
         });
-    }).catch(error => {
-        rej("create new exercise faild")
     });
 }
 
@@ -36,9 +34,6 @@ exports.getExercises = (obj_exercise) => {
             else
                 res(result);
         });
-        
-    }).catch(error => {
-        rej("error to get Exercises")
     });
 }
 
@@ -63,7 +58,5 @@ exports.updateExercises = (obj_exercise) => {
             })
         });
 
-    }).catch(error => {
-        rej("error to get Exercises")
     });
 }

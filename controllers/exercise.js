@@ -28,7 +28,7 @@ route.post('/', (req, res)=>{
     })
 });
 
-//regular get exercises (filter)
+//regular get exercises (filter) - if empty req body return all exercises
 route.post('/getExercises', (req, res)=>{
     var obj_exercise = JSON.parse(JSON.stringify({
         _id:            req.body._id,
