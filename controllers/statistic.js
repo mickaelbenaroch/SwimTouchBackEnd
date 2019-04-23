@@ -6,7 +6,7 @@ records = require('../models/statistic'),
 { check, validationResult } = require('express-validator/check');
 
 //get all swimmer records (swimmer is require)
-route.get('/swimmer', check('swimmer_ref').not().isEmpty() ,(req, res)=>{
+route.post('/swimmer', check('swimmer_ref').not().isEmpty() ,(req, res)=>{
 
     records.getStatisticByswimmer(req.body.swimmer_ref).then((data) => {
         res.status(200).json({isTrue: true, records: data});   
