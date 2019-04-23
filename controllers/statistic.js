@@ -7,6 +7,11 @@ records = require('../models/statistic'),
 
 //get all swimmer records (swimmer is require)
 route.get('/swimmer_record', check('swimmer_ref').not().isEmpty() ,(req, res)=>{
+    const errors = validationResult(req);
+    let validate_array = errors.array();
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: `${validate_array[0].param} is require` });
+    }
 
     records.getStatisticByswimmer(req.body.swimmer_ref).then((data) => {
         res.status(200).json({isTrue: true, records: data});   
