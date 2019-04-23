@@ -8,7 +8,7 @@ exports.getStatisticByswimmer = (swimmer_ref) => {
     let db_table = db.get().collection('st-record');
 
     return new Promise(( res, rej) => {
-        db_table.find({'swimmer.swimmer_ref': swimmer_ref }).toArray((err, result) =>{
+        db_table.find({'swimmer.swimmer_id': swimmer_ref }).toArray((err, result) =>{
             if(err || result === undefined || result.length == 0)
                 rej("error to get records")
             else

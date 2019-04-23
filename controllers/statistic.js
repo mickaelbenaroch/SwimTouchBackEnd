@@ -17,25 +17,20 @@ function* valid_chack(validationResult){
 }
 
 //get all swimmer records (swimmer is require)
-route.get('/swimmer_record', check('swimmer_ref').not().isEmpty() ,(req, res)=>{
-    let validat = valid_chack(validationResult(req));
+route.post('/swimmer', check('swimmer_ref').not().isEmpty() ,(req, res)=>{
 
-    if(validat.next().value == false){
-        res.status(422).json({ errors: `${validat.next().value[0].param} is require` });
-    }else{
-        records.getStatisticByswimmer(req.body.swimmer_ref).then((data) => {
-            res.status(200).json({isTrue: true, records: data});   
-            res.end(); 
-        }).catch(err => {
-            res.json({isTrue: false, error: err})
-            res.status(500)
-            res.end()
-        })
-    }
+    records.getStatisticByswimmer(req.body.swimmer_ref).then((data) => {
+        res.status(200).json({isTrue: true, records: data});   
+        res.end(); 
+    }).catch(err => {
+        res.json({isTrue: false, error: err})
+        res.status(500)
+        res.end()
+    })
 });
 
 //get user records by date (start_date & swimmer name is require, end_date is optional)
-route.get('/date_record', check('start_date').not().isEmpty(), check('swimmer_ref').not().isEmpty() ,(req, res)=>{
+route.post('/date_record', check('start_date').not().isEmpty(), check('swimmer_ref').not().isEmpty() ,(req, res)=>{
 
     var obj_records = JSON.parse(JSON.stringify({
         start_date: req.body.start_date,
@@ -61,7 +56,7 @@ route.get('/date_record', check('start_date').not().isEmpty(), check('swimmer_re
 
 
 //get full swimmer records (with exercise 7 swimer details) (swimmer is require)
-route.get('/full_records', check('swimmer_ref').not().isEmpty() ,(req, res)=>{
+route.post('/full_records', check('swimmer_ref').not().isEmpty() ,(req, res)=>{
     let validat = valid_chack(validationResult(req));
 
     if(validat.next().value == false){

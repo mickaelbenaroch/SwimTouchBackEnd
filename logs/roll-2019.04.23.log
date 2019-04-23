@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 11:28:57.016 INFO  app running on http://localhost:3030 2019-04-23T08:28:57.013Z 
 11:47:11.486 INFO  app running on http://localhost:3030 2019-04-23T08:47:11.484Z 
 11:47:33.284 INFO  app running on http://localhost:3030 2019-04-23T08:47:33.283Z 
@@ -225,3 +226,10 @@
 17:40:13.353 INFO  app running on http://localhost:3030 2019-04-23T14:40:13.353Z 
 17:44:20.466 INFO  app running on http://localhost:3030 2019-04-23T14:44:20.465Z 
 17:45:23.474 INFO  app running on http://localhost:3030 2019-04-23T14:45:23.473Z 
+=======
+10:10:31.562 INFO  app running on http://localhost:3030 2019-04-23T07:10:31.562Z 
+13:42:41.880 INFO  app running on http://localhost:3030 2019-04-23T10:42:41.880Z 
+13:50:15.665 INFO  app running on http://localhost:3030 2019-04-23T10:50:15.665Z 
+13:53:18.093 INFO  app running on http://localhost:3030 2019-04-23T10:53:18.093Z 
+>>>>>>> 29be5cec963edfb14e74a1c800e3e37953c9b4c9
+17:49:08.324 INFO  app running on http://localhost:3030 2019-04-23T14:49:08.324Z 
