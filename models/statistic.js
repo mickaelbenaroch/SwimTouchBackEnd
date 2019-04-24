@@ -1,6 +1,6 @@
 'use strict';
 
-var db = require('./db'); 
+var db = require('./db');  
 
 //get all swimmer records
 exports.getStatisticByswimmer = (swimmer_ref) => {
@@ -43,5 +43,37 @@ exports.getStatisticByDate = (obj_records) => {
     });
 }
 
+//get full swimmer records by name (with exercise & swimer details)
+exports.getFullStatistic = (obj_records) => {
+    const db_record = db.get().collection('st-record');
+    const db_exercise = db.get().collection('st-exercise');
+    const db_swimmer = db.get().collection('st-swimmer');
 
+    return new Promise(( res, rej) => {
+        //find all swimmer records
+        db_record.find({'swimmer.swimmer_ref': obj_records }).toArray((err, result) =>{
+            if(err || result === undefined || result.length == 0)
+                rej("error to get records")
+            else
+                res(result);
+        });  
+    }).then(result => {
+        //then get swimmer profile
+        return new Promise(( res, rej) => {
+            db_swimmer.findOne({'_id': result[0].swimmer.swimmer_id }, (err, data) =>{
+                if(err || data === undefined || data === null || data.length == 0)
+                    return "error to get records" 
+            
+                result.forEach((element, i) => {
+                    element.swimmer = data
+                });
 
+                res(result)
+            });
+        });
+
+    }).then((result, ex )=> {
+        //then get swimmer exercise
+        return result
+    }); 
+}
