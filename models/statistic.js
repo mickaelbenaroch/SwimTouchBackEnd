@@ -1,6 +1,7 @@
 'use strict';
 
-var db = require('./db');  
+let db = require('./db');  
+let db_class = require('./testDbopp');
 
 //get all swimmer records
 exports.getStatisticByswimmer = (swimmer_ref) => {
@@ -72,8 +73,20 @@ exports.getFullStatistic = (obj_records) => {
             });
         });
 
-    }).then((result, ex )=> {
+    }).then(async(result )=> {
         //then get swimmer exercise
+        let exercise = []; 
+
+        await db_exercise.find().forEach(element => {
+            //all exercise
+            exercise.push(element)
+        });
+
+        result.forEach((element, i) => {
+            element.exercise_id = exercise.find(elem => {
+                return element.exercise_id == elem._id
+            })
+        });
         return result
     }); 
 }
