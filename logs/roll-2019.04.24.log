@@ -1,6 +1,11 @@
 09:40:15.987 INFO  app running on http://localhost:3030 2019-04-24T06:40:15.987Z 
 09:41:22.653 INFO  'mickaelbenaroch@yahoo.fr' Login to SwimTouch 2019-04-24T06:41:22.653Z 
+<<<<<<< HEAD
 11:47:30.427 INFO  app running on http://localhost:3030 2019-04-24T08:47:30.426Z 
 11:50:18.630 INFO  app running on http://localhost:3030 2019-04-24T08:50:18.630Z 
 11:51:46.103 INFO  app running on http://localhost:3030 2019-04-24T08:51:46.103Z 
 11:53:56.963 INFO  app running on http://localhost:3030 2019-04-24T08:53:56.962Z 
+=======
+10:43:15.215 INFO  app running on http://localhost:3030 2019-04-24T07:43:15.215Z 
+11:36:23.081 INFO  app running on http://localhost:3030 2019-04-24T08:36:23.081Z 
+>>>>>>> b935ad34efc531ecb31580b293f933bd516b230b

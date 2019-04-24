@@ -14,7 +14,8 @@ route.post('/swimmertarget', (req, res)=>{
         triesToImprove: req.body.triesToImprove,
         style:          req.body.style,
         targetTime:     req.body.targetTime,
-        swimmer_ref:    req.body.swimmer_ref
+        swimmer_ref:    req.body.swimmer_ref,
+        date:           req.body.date
    };
 
     swimmer.createSwimmerTarget(obj_swimmer_target).then((data) => {
