@@ -56,7 +56,7 @@ route.post('/getSwimmerTeams', (req, res)=>{
     let obj_trainning = req.body.swimmer_id
 
     team.getSwimmerTeams(obj_trainning).then((data) => {
-        res.status(200).json({isTrue: true, trainning: data});   
+        res.status(200).json({isTrue: true, teams: data});   
         res.end(); 
     }).catch(err => {
         res.json({isTrue: false, error: err})
