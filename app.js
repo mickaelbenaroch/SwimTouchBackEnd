@@ -21,12 +21,12 @@ app.use(require('./controllers'));
 db.connect(config.db.connection.uri, (err) => {
    if(err){
         console.log('Unable to connect to MongoDB.');
-        log.log_fatal(' Unable to connect to MongoDB. ');
+        //log.log_fatal(' Unable to connect to MongoDB. ');
         process.exit(1)
    }else{
         app.listen(config.server.port, () => {
             console.log(`app running on http://${config.server.host}:${config.server.port}`);
-            log.log_info(`app running on http://${config.server.host}:${config.server.port} `);
+            //log.log_info(`app running on http://${config.server.host}:${config.server.port} `);
         });
    }
 });

@@ -64,10 +64,8 @@ exports.updateExercises = (obj_exercise) => {
 //get swimmer exercise 
 exports.getSwimmerExercises = (obj_exercise) => {
     let exercise = db.get().collection('st-exercise');
-    console.log(obj_exercise)
     return new Promise(( res, rej) => {
         exercise.find({"routes.routes": {$elemMatch:{ swimmer_id: obj_exercise}}}).toArray((err, result) =>{
-            console.log(result)
             if(err || result === undefined || result.length == 0)
                 rej("error to get Exercises")
             else
