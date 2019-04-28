@@ -74,5 +74,20 @@ route.post('/updateExercise', (req, res)=>{
     })
 });
 
+//get swimmer exercises 
+route.post('/getSwimmerExercises', (req, res)=>{
+
+    let obj_exercise = req.body._id;
+
+    exercise.getSwimmerExercises(obj_exercise).then((data) => {
+        res.status(200).json({isTrue: true, exercise: data});   
+        res.end(); 
+    }).catch(err => {
+        res.json({isTrue: false, error: err})
+        res.status(500)
+        res.end()
+    })
+});
+
 
 module.exports = route
