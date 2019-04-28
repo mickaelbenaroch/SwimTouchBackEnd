@@ -30,32 +30,32 @@ exports.createTrainning = (obj_trainning) => {
 exports.getTrainnings = (obj_trainning) => {
     return new Promise(( res, rej) => {
         let trainning = db.get().collection('st-trainning');
-        let swimmers_obj = db.get().collection('st-swimmer');
-        let exercise = db.get().collection('st-exercise');
-        let result_obj = [];
-
          trainning.find({coachmail:obj_trainning.coachmail}).toArray().then( items => {
-        //   items.forEach((item)=>{
-        //       let temp = {
-        //           coachmail: item.coachmail,
-        //           exercises: item.exercises,
-        //           name: item.name,
-        //           team_id: item.team_id,
-        //           _id: item._id
-        //       };
-            //במקום כל החרא הזה, שמרתי את כל התרגיל כולו לתוך אימון בדאטה בייז ככה לא צריך לולאות
-            //   item.exercises.forEach(ex => {
-            //       exercise.findOne({_id: ex}).then((data)=>{
-            //           temp.exercises.push(data);
-            //       })
-            // });
-           // result_obj.push(temp);
            res(items)
-          //})
         })
         
     }).catch(error => {
         rej("error to get exercises")
-    });
-    
+    }); 
 }
+
+
+//regular get traning (multi key)
+exports.getSwimmerTrainnings = (obj_trainning) => {
+    let trainning = db.get().collection('st-trainning');
+    
+    return new Promise(( res, rej) => {
+         trainning.find({"team_id.swimmers": { $elemMatch: {_id: obj_trainning}}}).toArray((err, result) => {
+             console.log(result)
+             console.log("sdsdsd")
+
+            if(err || result === undefined || result.length == 0)
+                rej("error to get Exercises")
+            else
+                res(result);  
+           
+        });
+    });
+}
+
+

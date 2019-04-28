@@ -22,7 +22,7 @@ route.post('/signup', check('user').isEmail(), check('pwd').isLength({ min: 8 })
     let validate_array = errors.array();
     
     if (!errors.isEmpty()) {
-        log.log_error(`Signup new user - Incorrect ${validate_array[0].param}, value = ${validate_array[0].value} `);
+        //log.log_error(`Signup new user - Incorrect ${validate_array[0].param}, value = ${validate_array[0].value} `);
         return res.status(422).json({ errors: validate_array });
     }
 

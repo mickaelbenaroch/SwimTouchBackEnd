@@ -14,28 +14,28 @@ exports.signup = (info, pwd) => {
 
         bcrypt.hash(pwd, 10, (err, hash) => {
             if(err){
-                log.log_error(`Signup new user - ${info.user} `);
+                //log.log_error(`Signup new user - ${info.user} `);
                 reject("error to signup  user or email")
             }
                 
             user.insertOne({user: info.user, pwd: hash}, (err, result) => {
                 if(err){
-                    log.log_error(`Signup new user - ${info.user} `);
+                    //log.log_error(`Signup new user - ${info.user} `);
                     reject("error to signup user or ")
                 }
                 else{
-                    log.log_info(`New User is Signup: '${info.user}' (Insert to users db) `);
+                    //log.log_info(`New User is Signup: '${info.user}' (Insert to users db) `);
                     response(true)
                 }
             });
 
             profile.insertOne(info, (err, result) => {
                 if(err){
-                    log.log_error(`Signup new user - ${info.user} `);
+                    //log.log_error(`Signup new user - ${info.user} `);
                     reject("error to signup user or ")
                 }
                 else{
-                    log.log_info(`New User is Signup: '${info.user}' (Insert to profile db) `);
+                    //log.log_info(`New User is Signup: '${info.user}' (Insert to profile db) `);
                     response(true)
                 }    
             })
@@ -58,11 +58,11 @@ exports.login = (email, password) => {
             else{
                 bcrypt.compare(password, result.pwd, (err, response) => {
                     if(err || response === false){
-                        log.log_error(`'${email}' Failed to Login, Email or Password is incorrect `);
+                        //log.log_error(`'${email}' Failed to Login, Email or Password is incorrect `);
                         rej('Email or Password is incorrect');
                     }
                     else{   
-                        log.log_info(`'${email}' Login to SwimTouch `);
+                        //log.log_info(`'${email}' Login to SwimTouch `);
                         res(true);
                     }
                 });
@@ -79,11 +79,11 @@ exports.picture = (email, picture) => {
         let profile = db.get().collection('profile');
          try {
             profile.updateOne({"user":email},{$set: {"picture": picture}},(suc,err) => {
-                log.log_info(`'${email}' - Upload new picture `);
+                //log.log_info(`'${email}' - Upload new picture `);
                 res(suc)
             });
         }catch (error) {
-            log.log_error(`'${email}' - Upload picture failed `);
+            //log.log_error(`'${email}' - Upload picture failed `);
             rej('error on pic upload');
         }
     })
