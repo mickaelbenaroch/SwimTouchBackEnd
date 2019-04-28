@@ -52,7 +52,7 @@ exports.getFullStatistic = (obj_records) => {
 
     return new Promise(( res, rej) => {
         //find all swimmer records
-        db_record.find({'swimmer.swimmer_ref': obj_records }).toArray((err, result) =>{
+        db_record.find({'swimmer.swimmer_id': obj_records }).toArray((err, result) =>{
             if(err || result === undefined || result.length == 0)
                 rej("error to get records")
             else
