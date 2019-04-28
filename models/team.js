@@ -79,3 +79,22 @@ exports.team = (coach) => {
         });    
     });
 }
+
+
+//regular get traning (multi key)
+exports.getSwimmerTeams = (obj_trainning) => {
+    let team = db.get().collection('st-team');
+    
+    return new Promise(( res, rej) => {
+        team.find({"swimmers": {$all: [ obj_trainning ] }}).toArray((err, result) => {
+             console.log(result)
+             console.log("sdsdsd")
+
+            if(err || result === undefined || result.length == 0)
+                rej("error to get Exercises")
+            else
+                res(result);  
+           
+        });
+    });
+}

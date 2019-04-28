@@ -51,5 +51,18 @@ route.get('/team', (req, res)=>{
     })
 });
 
+//get swimmer traning 
+route.post('/getSwimmerTeams', (req, res)=>{
+    let obj_trainning = req.body.swimmer_id
+
+    team.getSwimmerTeams(obj_trainning).then((data) => {
+        res.status(200).json({isTrue: true, trainning: data});   
+        res.end(); 
+    }).catch(err => {
+        res.json({isTrue: false, error: err})
+        res.status(500)
+        res.end()
+    })
+});
 
 module.exports = route
