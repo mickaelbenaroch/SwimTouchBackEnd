@@ -103,4 +103,17 @@ route.post('/updateNotification', (req, res) => {
     });
 });
 
+//delete notificatione
+//require  - notification_id
+route.post('/deleteNotification', (req, res) => {
+    notification.deleteNotification(req.body.notification_id).then((data) => {
+        res.status(200).json({isTrue: true,  data});   
+        res.end(); 
+    }).catch((err) => {
+        res.json({isTrue: false, error: err})
+        res.status(500)
+        res.end()
+    });
+});
+
 module.exports = route

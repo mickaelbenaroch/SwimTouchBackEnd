@@ -74,3 +74,17 @@ exports.updateNotification = (obj_notification) => {
         });    
     });
 }
+
+//delete notification 
+exports.deleteNotification = (obj_notification) => {
+    let notification = db.get().collection('st-notification');
+
+    return new Promise(( res, rej) => {
+        notification.deleteOne({_id: ObjectID(obj_notification)}, (err, result) =>{
+            if(err || result === undefined || result.length == 0)
+                rej("error to delete Notification")
+            else
+                res("delete Notification as success");
+        });    
+    });
+}
