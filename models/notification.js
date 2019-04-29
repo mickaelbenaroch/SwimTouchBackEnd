@@ -2,9 +2,10 @@
 
 
 var db = require('./db'); 
+var ObjectID = require('mongodb').ObjectID;
 
 //get swimmer notification 
-exports.getSwimmerNotification = (obj_notification) => {
+exports.getNotification = (obj_notification) => {
     let notification = db.get().collection('st-notification');
 
 
@@ -57,5 +58,19 @@ exports.unreadNotification = (obj_notification) => {
             else
                 res(result);
         });
+    });
+}
+
+//update notification 
+exports.updateNotification = (obj_notification) => {
+    let notification = db.get().collection('st-notification');
+
+    return new Promise(( res, rej) => {
+        notification.updateOne({_id: ObjectID(obj_notification)}, {$set: {HasBeenreaded: true}}, (err, result) =>{
+            if(err || result === undefined || result.length == 0)
+                rej("error to update Notification")
+            else
+                res("update Notification as read");
+        });    
     });
 }
