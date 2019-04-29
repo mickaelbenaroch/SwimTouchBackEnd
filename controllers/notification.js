@@ -93,15 +93,21 @@ route.post('/unreadNotification', (req, res) => {
 
 //update HasBeenreaded field to true
 //require  - notification_id
-route.post('/updateNotification', (req, res) => {
-    notification.updateNotification(req.body.notification_id).then((data) => {
-        res.status(200).json({isTrue: true,  data});   
-        res.end(); 
-    }).catch((err) => {
-        res.json({isTrue: false, error: err})
-        res.status(500)
-        res.end()
-    });
+route.post('/updateNotification', check('notification_id').not().isEmpty(), (req, res) => {
+    let validat = valid_chack(validationResult(req));
+
+    if(validat.next().value == false){
+        res.status(422).json({ errors: `${validat.next().value[0].param} is require` });
+    }else{
+        notification.updateNotification(req.body.notification_id).then((data) => {
+            res.status(200).json({isTrue: true,  data});   
+            res.end(); 
+        }).catch((err) => {
+            res.json({isTrue: false, error: err})
+            res.status(500)
+            res.end()
+        });
+    }
 });
 
 //delete notificatione
