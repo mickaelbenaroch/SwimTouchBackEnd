@@ -1,11 +1,13 @@
 'use strict';
 
+
 var db = require('./db'); 
 
-
-//get swimmer exercise 
-exports.getSwimmerMessage = (obj_notification) => {
+//get swimmer notification 
+exports.getSwimmerNotification = (obj_notification) => {
     let notification = db.get().collection('st-notification');
+
+
     return new Promise(( res, rej) => {
         notification.find({swimmer_id: obj_notification}).toArray((err, result) =>{
             if(err || result === undefined || result.length == 0)
@@ -13,5 +15,19 @@ exports.getSwimmerMessage = (obj_notification) => {
             else
                 res(result);
         });
+    });
+}
+
+//set swimmer notification 
+exports.setNotification = (obj_notification) => {
+    let notification = db.get().collection('st-notification');
+
+    return new Promise(( res, rej) => {
+        notification.insertOne(obj_notification, (err, result) => {
+            if(err)
+                rej("error in inserting notification ")
+            else    
+                res(true)
+    })
     });
 }
