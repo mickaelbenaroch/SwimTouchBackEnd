@@ -12,5 +12,7 @@ router.use('/team', require('./team'))
 router.use('/records', require('./records'))
 router.use('/statistic', require('./statistic'))
 router.use('/target', require('./target'))
+router.use('/notification', require('./notification.js'))
+
 
 module.exports = router
