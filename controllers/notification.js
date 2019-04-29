@@ -56,4 +56,29 @@ route.post('/setNotification', check('swimmer_id').not().isEmpty(), check('messa
 });
 
 
+//get swimmer notification only if read
+route.post('/readNotification', (req, res) => {
+    notification.readNotification(req.body.swimmer_id).then((data) => {
+        res.status(200).json({isTrue: true,  data});   
+        res.end(); 
+    }).catch((err) => {
+        res.json({isTrue: false, error: err})
+        res.status(500)
+        res.end()
+    });
+});
+
+//get swimmer notification only if unread
+route.post('/unreadNotification', (req, res) => {
+    notification.unreadNotification(req.body.swimmer_id).then((data) => {
+        res.status(200).json({isTrue: true,  data});   
+        res.end(); 
+    }).catch((err) => {
+        res.json({isTrue: false, error: err})
+        res.status(500)
+        res.end()
+    });
+});
+
+
 module.exports = route
