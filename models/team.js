@@ -98,3 +98,33 @@ exports.getSwimmerTeams = (obj_trainning) => {
         });
     });
 }
+
+//add new swimmer to team
+//require - swimmer_id & team_id
+exports.addSwimmerTeams = (obj_team) => {
+    let team = db.get().collection('st-team');
+    
+    return new Promise(( res, rej) => {
+        team.updateOne({_id: obj_team.team}, {$addToSet: {swimmers: obj_team.swimmer}}, (err, result) => {
+            if(err || result === undefined || result.length == 0)
+                rej("error to add swimmer")
+            else
+                res(result);  
+        });
+    });
+}
+
+//delete swimmer from team
+//require - swimmer_id & team_id
+exports.deleteSwimmerTeams = (obj_team) => {
+    let team = db.get().collection('st-team');
+    
+    return new Promise(( res, rej) => {
+        team.deleteOne({_id: obj_team.team}, {$addToSet: {swimmers: obj_team.swimmer}}, (err, result) => {
+            if(err || result === undefined || result.length == 0)
+                rej("error to add swimmer")
+            else
+                res(result);  
+        });
+    });
+}
