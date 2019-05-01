@@ -22,9 +22,9 @@ exports.createSwimmer = (obj_swimmer) => {
 
 //regular get swimmer (filter)
 exports.getSwimmers = (obj_swimmer) => {
-    return new Promise(( res, rej) => {
-        let swimmer = db.get().collection('st-swimmer');
+    let swimmer = db.get().collection('st-swimmer');
 
+    return new Promise(( res, rej) => {
         swimmer.find(obj_swimmer).toArray((err, result) =>{
             if(err || result === undefined || result.length == 0)
                 rej("error to get swimmers")
@@ -32,8 +32,22 @@ exports.getSwimmers = (obj_swimmer) => {
                 res(result);
         });
         
-    }).catch(error => {
-        rej("error to get swimmers")
+    })
+}
+
+//update swimmer
+//require - swimmer_id
+//no spicel feild update require - send any field to update
+exports.updateSwimmers = (id ,obj_swimmer) => {
+    let swimmer = db.get().collection('st-swimmer');
+
+    return new Promise(( res, rej) => {
+        swimmer.updateOne({_id: id}, {$set: obj_swimmer}, (err, result) =>{
+            if(err || result === undefined || result.length == 0)
+                rej("error to update swimmers")
+            else
+                res(result);
+        });
     });
 }
 
