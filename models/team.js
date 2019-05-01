@@ -120,7 +120,7 @@ exports.deleteSwimmerTeams = (obj_team) => {
     let team = db.get().collection('st-team');
     
     return new Promise(( res, rej) => {
-        team.deleteOne({_id: obj_team.team}, {$addToSet: {swimmers: obj_team.swimmer}}, (err, result) => {
+        team.updateOne({_id: obj_team.team}, {$pull: {swimmers: obj_team.swimmer}}, (err, result) => {
             if(err || result === undefined || result.length == 0)
                 rej("error to add swimmer")
             else
