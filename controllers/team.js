@@ -88,7 +88,7 @@ route.post('/addSwimmerTeams',  check('swimmer_id').not().isEmpty(), check('team
         res.status(422).json({ errors: `${validat.next().value[0].param} is require` });
     }else{
         team.addSwimmerTeams({"team": req.body.team_id, "swimmer": req.body.swimmer_id}).then((data) => {
-            res.status(200).json({isTrue: true, teams: data});   
+            res.status(200).json({isTrue: true, teams: "team update"});   
             res.end(); 
         }).catch(err => {
             res.json({isTrue: false, error: err})
@@ -109,7 +109,7 @@ route.post('/deleteSwimmerTeams',  check('swimmer_id').not().isEmpty(), check('t
         res.status(422).json({ errors: `${validat.next().value[0].param} is require` });
     }else{
         team.deleteSwimmerTeams({"team": req.body.team_id, "swimmer": req.body.swimmer_id}).then((data) => {
-            res.status(200).json({isTrue: true, teams: data});   
+            res.status(200).json({isTrue: true, teams: "user delete from the team"});   
             res.end(); 
         }).catch(err => {
             res.json({isTrue: false, error: err})
