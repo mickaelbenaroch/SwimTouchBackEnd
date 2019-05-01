@@ -5,6 +5,8 @@ route = express.Router(),
 team = require('../models/team'),
 uuidv4 = require('uuid/v4');
 
+
+
 //create new team
 route.post('/', (req, res)=>{
     var obj_team = {
@@ -51,10 +53,23 @@ route.get('/team', (req, res)=>{
     })
 });
 
-//get swimmer traning 
+//get swimmer team 
 route.post('/getSwimmerTeams', (req, res)=>{
     let obj_trainning = req.body.swimmer_id
 
+    team.getSwimmerTeams(obj_trainning).then((data) => {
+        res.status(200).json({isTrue: true, teams: data});   
+        res.end(); 
+    }).catch(err => {
+        res.json({isTrue: false, error: err})
+        res.status(500)
+        res.end()
+    })
+});
+
+//update team
+//require - 
+route.post('/updateTeams', (req, res)=>{
     team.getSwimmerTeams(obj_trainning).then((data) => {
         res.status(200).json({isTrue: true, teams: data});   
         res.end(); 
