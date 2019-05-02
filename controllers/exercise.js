@@ -15,7 +15,8 @@ route.post('/', (req, res)=>{
         style:      req.body.style,
         distance:   req.body.distance,
         howMuchTouches: req.body.howMuchTouches,
-        routes:         req.body.routes
+        routes:         req.body.routes,
+        description:    req.body.description
     };
 
     exercise.createExercise(obj_exercise).then((data) => {
@@ -38,7 +39,8 @@ route.post('/getExercises', (req, res)=>{
         style:          req.body.style,
         distance:       req.body.distance,
         howMuchTouches: req.body.howMuchTouches,
-        routes:         req.body.routes
+        routes:         req.body.routes,
+        description:    req.body.description
     }));
 
     exercise.getExercises(obj_exercise).then((data) => {
@@ -61,7 +63,8 @@ route.post('/updateExercise', (req, res)=>{
         style:          req.body.style,
         distance:       req.body.distance,
         howMuchTouches: req.body.howMuchTouches,
-        routes:         req.body.routes
+        routes:         req.body.routes,
+        description:      req.body.description
     }));
 
     exercise.updateExercises(obj_exercise).then((data) => {
