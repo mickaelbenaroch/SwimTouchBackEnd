@@ -16,7 +16,11 @@ route.post('/', (req, res)=>{
         distance:   req.body.distance,
         howMuchTouches: req.body.howMuchTouches,
         routes:         req.body.routes,
-        description:    req.body.description
+        description:    req.body.description,
+        type:            req.body.type,
+        singleSwimDistance: req.body.singleSwimDistance,
+        repeat:      req.body.repeat,
+        hasBeenStarted: req.body.hasBeenStarted
     };
 
     exercise.createExercise(obj_exercise).then((data) => {
@@ -40,7 +44,11 @@ route.post('/getExercises', (req, res)=>{
         distance:       req.body.distance,
         howMuchTouches: req.body.howMuchTouches,
         routes:         req.body.routes,
-        description:    req.body.description
+        description:    req.body.description,
+        type:            req.body.type,
+        singleSwimDistance: req.body.singleSwimDistance,
+        repeat:      req.body.repeat,
+        hasBeenStarted: req.body.hasBeenStarted
     }));
 
     exercise.getExercises(obj_exercise).then((data) => {
@@ -64,7 +72,11 @@ route.post('/updateExercise', (req, res)=>{
         distance:       req.body.distance,
         howMuchTouches: req.body.howMuchTouches,
         routes:         req.body.routes,
-        description:      req.body.description
+        description:      req.body.description,
+        type:            req.body.type,
+        singleSwimDistance: req.body.singleSwimDistance,
+        repeat:      req.body.repeat,
+        hasBeenStarted: req.body.hasBeenStarted
     }));
 
     exercise.updateExercises(obj_exercise).then((data) => {
