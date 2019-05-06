@@ -73,3 +73,17 @@ exports.getSwimmerExercises = (obj_exercise) => {
         });
     });
 }
+
+//update exercise 
+exports.update = (id, obj_exercise) => {
+    let exercise = db.get().collection('st-exercise');
+
+    return new Promise(( res, rej) => {
+        exercise.updateOne({_id: id}, {$set: obj_exercise}, (err, result) =>{
+            if(err || result === undefined || result.length == 0)
+                rej("error to update Exercises")
+            else
+                res(result);
+        });
+    });
+}
