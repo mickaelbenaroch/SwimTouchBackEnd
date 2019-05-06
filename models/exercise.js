@@ -75,15 +75,40 @@ exports.getSwimmerExercises = (obj_exercise) => {
 }
 
 //update exercise 
-exports.update = (id, obj_exercise) => {
+exports.update = (obj_exercise, obj_training, obj) => {
     let exercise = db.get().collection('st-exercise');
+    let trainning = db.get().collection('st-trainning');
 
     return new Promise(( res, rej) => {
-        exercise.updateOne({_id: id}, {$set: obj_exercise}, (err, result) =>{
+        exercise.updateOne({_id: obj_exercise}, {$set: obj}, (err, result) =>{
             if(err || result === undefined || result.length == 0)
                 rej("error to update Exercises")
             else
                 res(result);
+        });
+    }).then((data)=>{
+        return new Promise(( res, rej) => {
+            trainning.find({_id: obj_training}).toArray((err, result) =>{
+
+                const objIndex = result[0].exercises.find( obj => obj.id === obj_exercise );
+
+                if(objIndex === undefined)
+                    rej("exercise not found")
+
+                Object.assign(objIndex, obj)
+                
+                if(err || result === undefined || result.length == 0)
+                    rej("error to update training")
+                else
+                    res(result[0].exercises);
+            });
+        });
+    }).then( resualt => {
+        trainning.updateOne({_id: obj_training}, { $set: {'exercises': resualt }}) ,((error, data)=> {
+            if(error || data === undefined || data.length == 0)
+                rej("error to update training")
+            else
+                return data;
         });
     });
 }

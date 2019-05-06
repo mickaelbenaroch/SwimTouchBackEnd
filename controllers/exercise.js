@@ -59,8 +59,8 @@ route.post('/getExercises', (req, res)=>{
         description:    req.body.description,
         type:            req.body.type,
         singleSwimDistance: req.body.singleSwimDistance,
-        repeat:      req.body.repeat,
-        hasBeenStarted: req.body.hasBeenStarted
+        repeat:             req.body.repeat,
+        hasBeenStarted:     req.body.hasBeenStarted
     }));
 
     exercise.getExercises(obj_exercise).then((data) => {
@@ -118,13 +118,14 @@ route.post('/getSwimmerExercises', (req, res)=>{
 
 
 //update exercises
-//require  - exercises "_id"
+//require  - exercise_id & training_id
 //optional - field to update
-//return   - bool & mogodb resulat
-route.post('/update', check('_id').not().isEmpty(),  (req, res)=>{
-    let id = req.body._id
+//return   - bool & mogodb result
+route.post('/update', check('exercise_id').not().isEmpty(), check('training_id').not().isEmpty(),  (req, res)=>{
+    let obj_exercise = req.body.exercise_id
+    let obj_training  = req.body.training_id
 
-    let obj_exercise = JSON.parse(JSON.stringify({
+    let obj = JSON.parse(JSON.stringify({
         date:           req.body.date, 
         coach:          req.body.coach,
         group:          req.body.group,
@@ -143,7 +144,7 @@ route.post('/update', check('_id').not().isEmpty(),  (req, res)=>{
     if(validat.next().value == false){
         res.status(422).json({ errors: `${validat.next().value[0].param} is require` });
     }else{
-        exercise.update(id, obj_exercise).then((data) => {
+        exercise.update(obj_exercise, obj_training, obj, obj).then((data) => {
             res.status(200).json({isTrue: true, exercise: data});   
             res.end(); 
         }).catch(err => {
@@ -153,5 +154,6 @@ route.post('/update', check('_id').not().isEmpty(),  (req, res)=>{
         })
     }
 });
+
 
 module.exports = route

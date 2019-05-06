@@ -46,9 +46,6 @@ exports.getSwimmerTrainnings = (obj_trainning) => {
     
     return new Promise(( res, rej) => {
          trainning.find({"team_id.swimmers": { $elemMatch: {_id: obj_trainning}}}).toArray((err, result) => {
-             console.log(result)
-             console.log("sdsdsd")
-
             if(err || result === undefined || result.length == 0)
                 rej("error to get Exercises")
             else
