@@ -73,4 +73,25 @@ route.post('/full_records', check('swimmer_id').not().isEmpty() ,(req, res)=>{
     }
 });
 
+//get yesterday traning 
+//require - coachmail to get is training
+//return  - yesterday training & records
+route.post('/yesterday_records', check('coachmail').not().isEmpty() ,(req, res)=>{
+    let validat = valid_chack(validationResult(req));
+
+    if(validat.next().value == false){
+        res.status(422).json({ errors: `${validat.next().value[0].param} is require` });
+    }else{
+        records.yesterday_records(req.body.coachmail).then((data) => {
+            res.status(200).json({isTrue: true, records: data});   
+            res.end(); 
+        }).catch(err => {
+            res.json({isTrue: false, error: err})
+            res.status(500)
+            res.end()
+        })
+    }
+});
+
+
 module.exports = route
