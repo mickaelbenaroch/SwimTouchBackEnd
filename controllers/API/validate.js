@@ -1,12 +1,12 @@
 'use strict';
-const config = require('../../configuration/config'),
-{ check, validationResult } = require('express-validator/check');
+const {logger} = require('../../configuration/config');
+const validationResult = logger.validation_Result;
 
 class Validate {
-
+    
     //chack for empty request
     static * valid_chack( req_body ){ 
-        let result=  validationResult(req_body)
+        let result = validationResult(req_body)
         let validate_array = result.array();
 
         if (!result.isEmpty()) {

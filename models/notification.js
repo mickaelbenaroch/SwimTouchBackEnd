@@ -1,6 +1,5 @@
 'use strict';
 
-
 var db = require('./db'); 
 var ObjectID = require('mongodb').ObjectID;
 
