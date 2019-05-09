@@ -45,7 +45,8 @@ route.post('/setNotification', check('swimmer_id').not().isEmpty(), check('messa
     title =  req.body.title,
     coachmail =  req.body.coachmail,
     date =  req.body.date,
-    coachId =  req.body.coachId;
+    coachId =  req.body.coachId,
+    priority  =  req.body.priority;
     
     let validat = valid_chack(validationResult(req));
 
@@ -53,7 +54,7 @@ route.post('/setNotification', check('swimmer_id').not().isEmpty(), check('messa
         res.status(422).json({ errors: `${validat.next().value[0].param} is require` });
     }else{
         notification.setNotification({"HasBeenreaded": false, "swimmer_id": swimmer_id,"title": title, "message": message, "coachmail": coachmail,
-                                      "date": date, "coachId": coachId }).then((data) => {
+                                      "date": date, "coachId": coachId, "priority": priority }).then((data) => {
             res.status(200).json({isTrue: true,  data});   
             res.end(); 
         }).catch((err) => {

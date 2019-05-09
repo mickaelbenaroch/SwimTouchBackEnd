@@ -101,6 +101,7 @@ route.post('/addSwimmerTeams',  check('swimmer_id').not().isEmpty(), check('team
 
 //delete swimmer from team
 //require - swimmer_id & team_id
+//return  - boolean true\false
 route.post('/deleteSwimmerTeams',  check('swimmer_id').not().isEmpty(), check('team_id').not().isEmpty(), (req, res)=>{
 
     let validat = valid_chack(validationResult(req));

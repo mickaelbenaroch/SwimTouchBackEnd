@@ -61,7 +61,6 @@ exports.updateTrainnings = (obj, trainning_id) => {
     
     return new Promise(( res, rej) => {
          trainning.updateOne({_id: trainning_id}, {$set: obj }, ((err, result) => {
-             console.log("sdfsdf")
             if(err || result === undefined || result.length == 0)
                 rej("error to update trainning")
             else
