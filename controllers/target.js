@@ -15,7 +15,9 @@ route.post('/swimmertarget', (req, res)=>{
         style:          req.body.style,
         targetTime:     req.body.targetTime,
         swimmer_ref:    req.body.swimmer_ref,
-        date:           req.body.date
+        date:           req.body.date,
+        done:           req.body.done,
+        notification_has_been_send: req.body.notification_has_been_send
    };
 
     swimmer.createSwimmerTarget(obj_swimmer_target).then((data) => {
@@ -54,7 +56,9 @@ route.post('/teamtarget', (req, res)=>{
         style:          req.body.style,
         targetTime:     req.body.targetTime,
         team_id:        req.body.team_ref,
-        date:           req.body.date
+        date:           req.body.date,
+        done:           req.body.done,
+        notification_has_been_send: req.body.notification_has_been_send
    };
 
     swimmer.createTeamTarget(obj_team_target).then((data) => {
@@ -74,6 +78,43 @@ route.post('/getteamtarget', (req, res)=>{
     }));
         
     swimmer.getTeamTarget(obj_team_target).then((data) => {
+        res.status(200).json({isTrue: true, target: data});   
+        res.end(); 
+    }).catch(err => {
+        res.json({isTrue: false, error: err})
+        res.status(500)
+        res.end()
+    })
+});
+
+//regular get team target (filter)
+route.post('/updateswimmertarget', (req, res)=>{
+    var obj_team_target = JSON.parse(JSON.stringify({
+            _id:  req.body._id,
+            done:         req.body.done,
+            notification_has_been_send: req.body.notification_has_been_send
+    }));
+        
+    swimmer.updateSwimmerTarget(obj_team_target).then((data) => {
+        res.status(200).json({isTrue: true, target: data});   
+        res.end(); 
+    }).catch(err => {
+        res.json({isTrue: false, error: err})
+        res.status(500)
+        res.end()
+    })
+});
+
+
+//regular get team target (filter)
+route.post('/updateteamtarget', (req, res)=>{
+    var obj_team_target = JSON.parse(JSON.stringify({
+            _id:    req.body._id,
+            done:         req.body.done,
+            notification_has_been_send: req.body.notification_has_been_send
+    }));
+        
+    swimmer.updateTeamTarget(obj_team_target).then((data) => {
         res.status(200).json({isTrue: true, target: data});   
         res.end(); 
     }).catch(err => {

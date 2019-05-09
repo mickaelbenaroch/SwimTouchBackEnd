@@ -69,3 +69,37 @@ exports.getTeamTarget = (obj_team_target) => {
         rej("error to get swimmers target")
     });
 }
+
+//regular update swimmer target (filter)
+exports.updateSwimmerTarget = (obj_swimmer_target) => {
+    return new Promise(( res, rej) => {
+        let swimmertarget = db.get().collection('st-swimmer-target');
+
+        swimmertarget.updateOne({"_id":obj_swimmer_target._id},{"$set": {"done": obj_swimmer_target.done, "notification_has_been_send": obj_swimmer_target.notification_has_been_send}}).then((err, result) =>{
+            if(err || result === undefined || result.length == 0)
+                rej("error to update swimmer target")
+            else
+                res(result);
+        });
+        
+    }).catch(error => {
+        rej("error to get swimmers target")
+    });
+}
+
+//regular update team target (filter)
+exports.updateTeamTarget = (obj_team_target) => {
+    return new Promise(( res, rej) => {
+        let teamtarget = db.get().collection('st-team-target');
+
+        teamtarget.updateOne({"_id":obj_team_target._id},{"$set": {"done": obj_team_target.done, "notification_has_been_send": obj_team_target.notification_has_been_send}}).then((err, result) =>{
+            if(err || result === undefined || result.length == 0)
+                        rej("error to update team target")
+                    else
+                        res(result);
+                });
+        
+    }).catch(error => {
+        rej("error to get swimmers target")
+    });
+}
