@@ -37,7 +37,7 @@ route.post('/getNotification', check('swimmer_id').not().isEmpty(), (req, res) =
 
 //set notification
 //require - all fields require except from "HasBeenreaded" is false by default and coachmail
-route.post('/setNotification', check('swimmer_id').not().isEmpty(), check('message').not().isEmpty(), check('priority').not().isEmpty()
+route.post('/setNotification', check('swimmer_id').not().isEmpty(), check('message').not().isEmpty(), check('priority').not().isEmpty(),
     check('coachmail').not().isEmpty(), check('date').not().isEmpty(),check('title').not().isEmpty(), (req, res) => {
 
     let swimmer_id = req.body.swimmer_id,
