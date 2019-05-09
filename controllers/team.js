@@ -78,6 +78,22 @@ route.post('/getSwimmerTeams', (req, res)=>{
     })
 });
 
+//get team by team _id 
+route.post('/getTeamById', (req, res)=>{
+    var obj_trainning = JSON.parse(JSON.stringify({
+        team_id:    req.body.team_id,
+    }));
+
+    team.getTeamById(obj_trainning).then((data) => {
+        res.status(200).json({isTrue: true, team: data});   
+        res.end(); 
+    }).catch(err => {
+        res.json({isTrue: false, error: err})
+        res.status(500)
+        res.end()
+    })
+});
+
 //add new swimmer to team
 //require - swimmer_id & team_id
 route.post('/addSwimmerTeams',  check('swimmer_id').not().isEmpty(), check('team_id').not().isEmpty(), (req, res)=>{
