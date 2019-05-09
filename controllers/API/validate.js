@@ -16,6 +16,11 @@ class Validate {
             return true;
         }
     }
+
+    //return error string
+    static error_valid(req_body){
+        return `${req_body} is require`
+    }
 }
   
 module.exports = Validate;
