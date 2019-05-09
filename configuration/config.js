@@ -35,6 +35,7 @@ module.exports = {
     },
     models: {
       notification: require('../models/notification'),
-      exercise:     require('../models/exercise')
+      exercise:     require('../models/exercise'),
+      login:        require('../models/login')
     }
   };
