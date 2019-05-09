@@ -90,3 +90,19 @@ exports.getFullStatistic = (obj_records) => {
         return result
     }); 
 }
+
+//get yesterday traning 
+exports.yesterday_records = (coach_mail) => {
+    let trainning = db.get().collection('st-trainning');
+    let yesterday = new Date(new Date().setDate(new Date().getDate()-1));
+   
+   return new Promise(( res, rej) => {
+        trainning.find({$and: [ {coachmail: coach_mail, date: yesterday.toISOString().split('T')[0] } ] }).toArray((err, result) => {
+            console.log(result)
+            if(err || result === undefined || result.length == 0)
+                rej("error to get records")
+            else
+                res(result);
+        });   
+    });
+}
