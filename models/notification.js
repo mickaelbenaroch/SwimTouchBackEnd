@@ -1,13 +1,11 @@
 'use strict';
 
-
 var db = require('./db'); 
 var ObjectID = require('mongodb').ObjectID;
 
-//get swimmer notification 
+//Details - get notification by swimmer_id
 exports.getNotification = (obj_notification) => {
     let notification = db.get().collection('st-notification');
-
 
     return new Promise(( res, rej) => {
         notification.find({swimmer_id: obj_notification}).toArray((err, result) =>{
@@ -19,7 +17,7 @@ exports.getNotification = (obj_notification) => {
     });
 }
 
-//set swimmer notification 
+//Details - set new notification
 exports.setNotification = (obj_notification) => {
     let notification = db.get().collection('st-notification');
 
@@ -29,11 +27,11 @@ exports.setNotification = (obj_notification) => {
                 rej("error in inserting notification ")
             else    
                 res(true)
-    })
+        });
     });
 }
 
-//get read notification by swimmer id 
+//Details - get swimmer notification only if is read notification
 exports.readNotification = (obj_notification) => {
     let notification = db.get().collection('st-notification');
 
@@ -47,7 +45,7 @@ exports.readNotification = (obj_notification) => {
     });
 }
 
-//get unread notification by swimmer id 
+//Details - get swimmer notification only if unread
 exports.unreadNotification = (obj_notification) => {
     let notification = db.get().collection('st-notification');
 
@@ -61,7 +59,7 @@ exports.unreadNotification = (obj_notification) => {
     });
 }
 
-//update notification 
+//Details - update HasBeenreaded field to true
 exports.updateNotification = (obj_notification) => {
     let notification = db.get().collection('st-notification');
 
@@ -75,7 +73,7 @@ exports.updateNotification = (obj_notification) => {
     });
 }
 
-//delete notification 
+//Details - delete notification
 exports.deleteNotification = (obj_notification) => {
     let notification = db.get().collection('st-notification');
 

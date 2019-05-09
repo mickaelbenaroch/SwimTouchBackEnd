@@ -55,4 +55,17 @@ exports.getSwimmerTrainnings = (obj_trainning) => {
     });
 }
 
-
+//update trainning
+exports.updateTrainnings = (obj, trainning_id) => {
+    let trainning = db.get().collection('st-trainning');
+    
+    return new Promise(( res, rej) => {
+         trainning.updateOne({_id: trainning_id}, {$set: obj }, ((err, result) => {
+            if(err || result === undefined || result.length == 0)
+                rej("error to update trainning")
+            else
+                res(result);  
+           
+        }));
+    });
+}

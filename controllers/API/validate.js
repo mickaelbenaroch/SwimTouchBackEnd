@@ -1,16 +1,12 @@
 'use strict';
-const config = require('../../configuration/config'),
-{ check, validationResult } = require('express-validator/check');
+const {logger} = require('../../configuration/config');
+const validationResult = logger.validation_Result;
 
-
-/* the class not working right now  */
 class Validate {
-
+    
     //chack for empty request
     static * valid_chack( req_body ){ 
-        let result=  validationResult(check([req_body, "empty"]).isEmpty())
-        console.log(result.isEmpty())
-        
+        let result = validationResult(req_body)
         let validate_array = result.array();
 
         if (!result.isEmpty()) {
@@ -19,6 +15,11 @@ class Validate {
         }else{
             return true;
         }
+    }
+
+    //return error string
+    static error_valid(req_body){
+        return `${req_body} is require`
     }
 }
   

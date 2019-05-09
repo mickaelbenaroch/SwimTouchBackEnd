@@ -2,7 +2,7 @@
 
 var db = require('./db'); 
 
-//create new exercise 
+//Details - create new exercise
 exports.createExercise = (obj_exercise) => {
     return new Promise(( res, rej) => {
         let exercise = db.get().collection('st-exercise');
@@ -23,7 +23,7 @@ exports.createExercise = (obj_exercise) => {
     });
 }
 
-//regular get traning (multi key)
+//Details - get exercises
 exports.getExercises = (obj_exercise) => {
     return new Promise(( res, rej) => {
         let exercise = db.get().collection('st-exercise');
@@ -37,11 +37,13 @@ exports.getExercises = (obj_exercise) => {
     });
 }
 
-//update exercise in db
+//Details - update exercises
 exports.updateExercises = (obj_exercise) => {
     return new Promise(( res, rej) => {
+
         let exercise = db.get().collection('st-exercise');
         let trainning = db.get().collection('st-trainning');
+
         //update the exercise itself
         exercise.updateOne({"_id": obj_exercise.id}, {"$set": {"routes": obj_exercise.routes}}).then(response =>{
             //update the exercise into the trainnig 
@@ -61,7 +63,7 @@ exports.updateExercises = (obj_exercise) => {
     });
 }
 
-//get swimmer exercise 
+//Details - get swimmer exercises 
 exports.getSwimmerExercises = (obj_exercise) => {
     let exercise = db.get().collection('st-exercise');
     return new Promise(( res, rej) => {
@@ -74,7 +76,7 @@ exports.getSwimmerExercises = (obj_exercise) => {
     });
 }
 
-//update exercise 
+//Details - update exercises in exercise_db & traininig_db
 exports.update = (obj_exercise, obj_training, obj) => {
     let exercise = db.get().collection('st-exercise');
     let trainning = db.get().collection('st-trainning');

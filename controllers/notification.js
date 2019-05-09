@@ -1,28 +1,19 @@
 'use strict';
 
-const express = require('express'),
-route = express.Router(),
-notification = require('../models/notification');
-const { check, validationResult } = require('express-validator/check');
+const {express, logger, models} = require('../configuration/config'),
+route           = express.route,
+check           = logger.check_body,
+notification    = models.notification,
+valid_class     = require('../controllers/API/validate');
 
-//chack validation
-function* valid_chack(validationResult){ 
-    let validate_array = validationResult.array();
-    if (!validationResult.isEmpty()) {
-        yield false;
-        yield validate_array;
-    }else{
-        return true;
-    }
-}
-
-//get notification by swimmer_id
-//require - "swimmer_id"
+//Details - get notification by swimmer_id
+//require - swimmer_id
+//return  - swimmer notification
 route.post('/getNotification', check('swimmer_id').not().isEmpty(), (req, res) => {
-    let validat = valid_chack(validationResult(req));
+    let validat_result = valid_class.valid_chack(req);
 
-    if(validat.next().value == false){
-        res.status(422).json({ errors: `${validat.next().value[0].param} is require` });
+    if(validat_result.next().value == false){
+        res.status(422).json({ errors: valid_class.error_valid(validat_result.next().value[0].param) });
     }else{
         notification.getNotification(req.body.swimmer_id).then((data) => {
             res.status(200).json({isTrue: true,  data});   
@@ -35,9 +26,10 @@ route.post('/getNotification', check('swimmer_id').not().isEmpty(), (req, res) =
     }
 });
 
-//set notification
-//require - all fields require except from "HasBeenreaded" is false by default and coachmail
-route.post('/setNotification', check('swimmer_id').not().isEmpty(), check('message').not().isEmpty(), 
+//Details - set new notification
+//require - all fields require except "HasBeenreaded", is false by default and coachmail field.
+//return  - boolean, true/false
+route.post('/setNotification', check('swimmer_id').not().isEmpty(), check('message').not().isEmpty(), check('priority').not().isEmpty(),
     check('coachmail').not().isEmpty(), check('date').not().isEmpty(),check('title').not().isEmpty(), (req, res) => {
 
     let swimmer_id = req.body.swimmer_id,
@@ -45,15 +37,16 @@ route.post('/setNotification', check('swimmer_id').not().isEmpty(), check('messa
     title =  req.body.title,
     coachmail =  req.body.coachmail,
     date =  req.body.date,
-    coachId =  req.body.coachId;
+    coachId =  req.body.coachId,
+    priority  =  req.body.priority;
     
-    let validat = valid_chack(validationResult(req));
+    let validat_result = valid_class.valid_chack(req);
 
-    if(validat.next().value == false){
-        res.status(422).json({ errors: `${validat.next().value[0].param} is require` });
+    if(validat_result.next().value == false){
+        res.status(422).json({ errors: valid_class.error_valid(validat_result.next().value[0].param) });
     }else{
         notification.setNotification({"HasBeenreaded": false, "swimmer_id": swimmer_id,"title": title, "message": message, "coachmail": coachmail,
-                                      "date": date, "coachId": coachId }).then((data) => {
+                                      "date": date, "coachId": coachId, "priority": priority }).then((data) => {
             res.status(200).json({isTrue: true,  data});   
             res.end(); 
         }).catch((err) => {
@@ -64,40 +57,54 @@ route.post('/setNotification', check('swimmer_id').not().isEmpty(), check('messa
     }
 });
 
+//Details - get swimmer notification only if is read notification
+//require - swimmer_id
+//return  - swimmer notification if "HasBeenreaded: true"
+route.post('/readNotification', check('swimmer_id').not().isEmpty(), (req, res) => {
+    let validat_result = valid_class.valid_chack(req);
 
-//get swimmer notification only if read
-//require  - swimmer_id
-route.post('/readNotification', (req, res) => {
-    notification.readNotification(req.body.swimmer_id).then((data) => {
-        res.status(200).json({isTrue: true,  data});   
-        res.end(); 
-    }).catch((err) => {
-        res.json({isTrue: false, error: err})
-        res.status(500)
-        res.end()
-    });
+    if(validat_result.next().value == false){
+        res.status(422).json({ errors: valid_class.error_valid(validat_result.next().value[0].param) });
+    }else{
+        notification.readNotification(req.body.swimmer_id).then((data) => {
+            res.status(200).json({isTrue: true,  data});   
+            res.end(); 
+        }).catch((err) => {
+            res.json({isTrue: false, error: err})
+            res.status(500)
+            res.end()
+        });
+    }   
 });
 
-//get swimmer notification only if unread
-//require  - swimmer_id
-route.post('/unreadNotification', (req, res) => {
-    notification.unreadNotification(req.body.swimmer_id).then((data) => {
-        res.status(200).json({isTrue: true,  data});   
-        res.end(); 
-    }).catch((err) => {
-        res.json({isTrue: false, error: err})
-        res.status(500)
-        res.end()
-    });
+//Details - get swimmer notification only if unread
+//require - swimmer_id
+//return  - swimmer notification if "HasBeenreaded: false"
+route.post('/unreadNotification', check('swimmer_id').not().isEmpty(), (req, res) => {
+    let validat_result = valid_class.valid_chack(req);
+
+    if(validat_result.next().value == false){
+        res.status(422).json({ errors: valid_class.error_valid(validat_result.next().value[0].param) });
+    }else{
+        notification.unreadNotification(req.body.swimmer_id).then((data) => {
+            res.status(200).json({isTrue: true,  data});   
+            res.end(); 
+        }).catch((err) => {
+            res.json({isTrue: false, error: err})
+            res.status(500)
+            res.end()
+        });
+    }
 });
 
-//update HasBeenreaded field to true
-//require  - notification_id
+//Details - update HasBeenreaded field to true
+//require - notification_id
+//return  - boolean, true/false
 route.post('/updateNotification', check('notification_id').not().isEmpty(), (req, res) => {
-    let validat = valid_chack(validationResult(req));
+    let validat_result = valid_class.valid_chack(req);
 
-    if(validat.next().value == false){
-        res.status(422).json({ errors: `${validat.next().value[0].param} is require` });
+    if(validat_result.next().value == false){
+        res.status(422).json({ errors: valid_class.error_valid(validat_result.next().value[0].param)});
     }else{
         notification.updateNotification(req.body.notification_id).then((data) => {
             res.status(200).json({isTrue: true,  data});   
@@ -110,17 +117,24 @@ route.post('/updateNotification', check('notification_id').not().isEmpty(), (req
     }
 });
 
-//delete notificatione
-//require  - notification_id
-route.post('/deleteNotification', (req, res) => {
-    notification.deleteNotification(req.body.notification_id).then((data) => {
-        res.status(200).json({isTrue: true,  data});   
-        res.end(); 
-    }).catch((err) => {
-        res.json({isTrue: false, error: err})
-        res.status(500)
-        res.end()
-    });
+//Details - delete notification
+//require - notification_id
+//return  - boolean, true/false
+route.post('/deleteNotification', check('notification_id').not().isEmpty(), (req, res) => {
+    let validat_result = valid_class.valid_chack(req);
+
+    if(validat_result.next().value == false){
+        res.status(422).json({ errors: valid_class.error_valid(validat_result.next().value[0].param) });
+    }else{
+        notification.deleteNotification(req.body.notification_id).then((data) => {
+            res.status(200).json({isTrue: true,  data});   
+            res.end(); 
+        }).catch((err) => {
+            res.json({isTrue: false, error: err})
+            res.status(500)
+            res.end()
+        });
+    }
 });
 
 module.exports = route

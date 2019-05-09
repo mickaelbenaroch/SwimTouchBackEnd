@@ -4,7 +4,7 @@ var db = require('./db');
 const bcrypt = require('bcrypt');
 const log = require('../controllers/API/logger');
 
-//signup new user
+//Details - signup new user
 exports.signup = (info, pwd) => {
     return new Promise(( res, rej) => {
         let reject = rej, response = res;
@@ -43,7 +43,7 @@ exports.signup = (info, pwd) => {
     });
 }
 
-//user login
+//Details - check user and password for user login
 exports.login = (email, password) => {
     return new Promise((res, rej) => {
 
@@ -68,9 +68,7 @@ exports.login = (email, password) => {
                 });
             }
         });   
-    })
-
-    
+    })   
 }
 
 //user picture
