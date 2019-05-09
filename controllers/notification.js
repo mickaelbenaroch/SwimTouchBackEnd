@@ -2,24 +2,15 @@
 
 const express = require('express'),
 route = express.Router(),
-notification = require('../models/notification');
-const { check, validationResult } = require('express-validator/check');
-
-//chack validation
-function* valid_chack(validationResult){ 
-    let validate_array = validationResult.array();
-    if (!validationResult.isEmpty()) {
-        yield false;
-        yield validate_array;
-    }else{
-        return true;
-    }
-}
+notification = require('../models/notification'),
+valid = require('./API/validate'),
+{ check, validationResult } = require('express-validator/check');
 
 //get notification by swimmer_id
 //require - "swimmer_id"
+//return  - swimmer notification
 route.post('/getNotification', check('swimmer_id').not().isEmpty(), (req, res) => {
-    let validat = valid_chack(validationResult(req));
+    let validat = valid.valid_chack(req);
 
     if(validat.next().value == false){
         res.status(422).json({ errors: `${validat.next().value[0].param} is require` });

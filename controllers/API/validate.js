@@ -2,15 +2,11 @@
 const config = require('../../configuration/config'),
 { check, validationResult } = require('express-validator/check');
 
-
-/* the class not working right now  */
 class Validate {
 
     //chack for empty request
     static * valid_chack( req_body ){ 
-        let result=  validationResult(check([req_body, "empty"]).isEmpty())
-        console.log(result.isEmpty())
-        
+        let result=  validationResult(req_body)
         let validate_array = result.array();
 
         if (!result.isEmpty()) {
