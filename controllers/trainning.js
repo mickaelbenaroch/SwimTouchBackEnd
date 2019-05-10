@@ -1,23 +1,16 @@
 'use strict';
 
-const express = require('express'),
+const { check } = require('express-validator/check'), 
+express = require('express'),
 route = express.Router(),
 trainning = require('../models/trainning'),
 uuidv4 = require('uuid/v4'),
-{ check, validationResult } = require('express-validator/check');
+valid_class = require('../controllers/API/validate'),
+log         = require('../controllers/API/logger');
 
-//chack validation
-function* valid_chack(validationResult){ 
-    let validate_array = validationResult.array();
-    if (!validationResult.isEmpty()) {
-        yield false;
-        yield validate_array;
-    }else{
-        return true;
-    }
-}
-
-//create new trainning
+//Details - create new trainning & is records document
+//require - none
+//return  - boolean,  true/false
 route.post('/', (req, res)=>{
     var obj_trainning = {
         _id:        uuidv4(),
@@ -41,7 +34,9 @@ route.post('/', (req, res)=>{
     })
 });
 
-//regular get trainning (multi key object)
+//Details - get training 
+//require - none (if boody req empty, response return empty)
+//return  - training
 route.post('/getTrainnings', (req, res)=>{
     var obj_trainning = JSON.parse(JSON.stringify({
         _id:        req.body._id,
@@ -62,24 +57,30 @@ route.post('/getTrainnings', (req, res)=>{
     })
 });
 
-//get swimmer trainning 
-route.post('/getSwimmerTrainnings', (req, res)=>{
+//Details - get swimmer trainning 
+//require - swimmer_id
+//return  - swimmer training
+route.post('/getSwimmerTrainnings', check('swimmer_id').not().isEmpty(), (req, res)=>{
     let obj_trainning = req.body.swimmer_id
+    let validat_result = valid_class.valid_chack(req);
 
-    trainning.getSwimmerTrainnings(obj_trainning).then((data) => {
-        res.status(200).json({isTrue: true, trainning: data});   
-        res.end(); 
-    }).catch(err => {
-        res.json({isTrue: false, error: err})
-        res.status(500)
-        res.end()
-    })
+    if(validat_result.next().value == false){
+        res.status(422).json({ errors: valid_class.error_valid(validat_result.next().value[0].param) });
+    }else{
+        trainning.getSwimmerTrainnings(obj_trainning).then((data) => {
+            res.status(200).json({isTrue: true, trainning: data});   
+            res.end(); 
+        }).catch(err => {
+            res.json({isTrue: false, error: err})
+            res.status(500)
+            res.end()
+        })
+    }
 });
 
-//update trainning .
-//require   - trainning_id.
-//optional  - fields to update (witout update exercise and team)
-//return    - bollean (rtue \false).
+//Details   - update trainning
+//require   - trainning_id (fields to update is optional)
+//return    - boolean, true/false 
 route.post('/updateTrainnings', check('trainning_id').not().isEmpty(),  (req, res)=>{
     let obj_trainning = req.body.trainning_id
 
@@ -91,10 +92,10 @@ route.post('/updateTrainnings', check('trainning_id').not().isEmpty(),  (req, re
         distance:       req.body.distance,
     }));
 
-    let validat = valid_chack(validationResult(req));
+    let validat_result = valid_class.valid_chack(req);
 
-    if(validat.next().value == false){
-        res.status(422).json({ errors: `${validat.next().value[0].param} is require` });
+    if(validat_result.next().value == false){
+        res.status(422).json({ errors: valid_class.error_valid(validat_result.next().value[0].param) });
     }else{
         trainning.updateTrainnings(obj, obj_trainning).then((data) => {
             res.status(200).json({isTrue: true, trainning: data});   
