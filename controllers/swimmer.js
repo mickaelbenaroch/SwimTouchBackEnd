@@ -1,23 +1,16 @@
 'use strict';
 
-const express = require('express'),
+const { check } = require('express-validator/check'),
+express = require('express'),
 route = express.Router(),
 swimmer = require('../models/swimmer'),
 uuidv4 = require('uuid/v4'),
-{ check, validationResult } = require('express-validator/check');
+valid_class = require('../controllers/API/validate'),
+log         = require('../controllers/API/logger');
 
-//chack validation
-function* valid_chack(validationResult){ 
-    let validate_array = validationResult.array();
-    if (!validationResult.isEmpty()) {
-        yield false;
-        yield validate_array;
-    }else{
-        return true;
-    }
-}
-
-//create new swimmer
+//Details - create new swimmer & is records document
+//require - none
+//return  - boolean, true\false
 route.post('/', (req, res)=>{
     var obj_swimmer = {
         _id:        uuidv4(),
@@ -39,7 +32,10 @@ route.post('/', (req, res)=>{
     })
 });
 
-//regular get swimmer (filter)
+
+//Details - get swimmer
+//require - none (if body req is empty , resualt res get all swimmer)
+//return  - swimmer 
 route.post('/getswimmers', (req, res)=>{
     var obj_swimmer = JSON.parse(JSON.stringify({
         _id:         req.body._id,
@@ -61,9 +57,9 @@ route.post('/getswimmers', (req, res)=>{
     })
 });
 
-//update swimmer
+//Details - update swimmer
 //require - swimmer_id
-//no spicel feild update require - send any field to update
+//return  - boolean, true\false
 route.post('/updateSwimmers', check('swimmer_id').not().isEmpty(),  (req, res)=>{
     let obj_swimmer = JSON.parse(JSON.stringify({
         name:        req.body.name, 
@@ -74,10 +70,10 @@ route.post('/updateSwimmers', check('swimmer_id').not().isEmpty(),  (req, res)=>
         picture: req.body.picture
     }));
 
-    let validat = valid_chack(validationResult(req));
+    let validat_result = valid_class.valid_chack(req);
 
-    if(validat.next().value == false){
-        res.status(422).json({ errors: `${validat.next().value[0].param} is require` });
+    if(validat_result.next().value == false){
+        res.status(422).json({ errors: valid_class.error_valid(validat_result.next().value[0].param) });
     }else{
         swimmer.updateSwimmers(req.body.swimmer_id, obj_swimmer).then((data) => {
             res.status(200).json({isTrue: true, swimmer: data});   

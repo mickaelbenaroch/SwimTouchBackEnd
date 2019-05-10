@@ -2,7 +2,7 @@
 
 var db = require('./db'); 
 
-//create new swimmer & is records document
+//Details - create new swimmer & is records document
 exports.createSwimmer = (obj_swimmer) => {
     return new Promise(( res, rej) => {
         let swimmer = db.get().collection('st-swimmer');
@@ -20,7 +20,7 @@ exports.createSwimmer = (obj_swimmer) => {
     });
 }
 
-//regular get swimmer (filter)
+//Details - get swimmer
 exports.getSwimmers = (obj_swimmer) => {
     let swimmer = db.get().collection('st-swimmer');
 
@@ -35,9 +35,7 @@ exports.getSwimmers = (obj_swimmer) => {
     })
 }
 
-//update swimmer
-//require - swimmer_id
-//no spicel feild update require - send any field to update
+//Details - update swimmer
 exports.updateSwimmers = (id ,obj_swimmer) => {
     let swimmer = db.get().collection('st-swimmer');
 
