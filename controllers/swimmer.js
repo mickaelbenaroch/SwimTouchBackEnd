@@ -67,7 +67,7 @@ route.post('/updateSwimmers', check('swimmer_id').not().isEmpty(),  (req, res)=>
         group:       req.body.group,
         age:         req.body.age,
         coachmail:   req.body.coachmail,
-        picture: req.body.picture
+        picture:     req.body.picture
     }));
 
     let validat_result = valid_class.valid_chack(req);

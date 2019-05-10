@@ -1,30 +1,22 @@
 'use strict';
 
-const express = require('express'),
+const { check } = require('express-validator/check'),
+express = require('express'),
 route = express.Router(),
 team = require('../models/team'),
 uuidv4 = require('uuid/v4'),
-{ check, validationResult } = require('express-validator/check');
+valid_class = require('../controllers/API/validate'),
+log         = require('../controllers/API/logger');
 
-//chack validation
-function* valid_chack(validationResult){ 
-    let validate_array = validationResult.array();
-    if (!validationResult.isEmpty()) {
-        yield false;
-        yield validate_array;
-    }else{
-        return true;
-    }
-}
-
-
-//create new team
+//Details - create new team
+//require - none
+//return  - boolean, true/false
 route.post('/', (req, res)=>{
     var obj_team = {
         _id:        uuidv4(),
         name:       req.body.name, 
-        coachmail:      req.body.coachmail,
-        swimmers:      req.body.swimmers,
+        coachmail:  req.body.coachmail,
+        swimmers:   req.body.swimmers,
     };
 
     team.createTeam(obj_team).then((data) => {
@@ -37,8 +29,10 @@ route.post('/', (req, res)=>{
     })
 });
 
-//get all team
-route.get('/getteams', (req, res)=>{
+//Details - get all team
+//require - none
+//return  - all teams
+route.post('/getteams', (req, res)=>{
     team.getTeams().then((data) => {
         res.status(200).json({isTrue: true, team: data});   
         res.end(); 
@@ -49,59 +43,81 @@ route.get('/getteams', (req, res)=>{
     })
 });
 
-//get team by coach mail
-route.get('/team', (req, res)=>{
+//Details - get team by coach mail
+//require - coachmail
+//return  - coachmail team
+route.post('/team', check('coachmail').not().isEmpty(), (req, res)=>{
 
-    let coach = req.body.coachmail
+    let coach = req.body.coachmail;
+    let validat_result = valid_class.valid_chack(req);
 
-    team.team(coach).then((data) => {
-        res.status(200).json({isTrue: true, team: data});   
-        res.end(); 
-    }).catch(err => {
-        res.json({isTrue: false, error: err})
-        res.status(500)
-        res.end()
-    })
+    if(validat_result.next().value == false){
+        res.status(422).json({ errors: valid_class.error_valid(validat_result.next().value[0].param) });
+    }else{
+        team.team(coach).then((data) => {
+            res.status(200).json({isTrue: true, team: data});   
+            res.end(); 
+        }).catch(err => {
+            res.json({isTrue: false, error: err})
+            res.status(500)
+            res.end()
+        })
+    }
 });
 
-//get swimmer team 
-route.post('/getSwimmerTeams', (req, res)=>{
+//Details - get swimmer team 
+//require - swimmer_id
+//return  - swimmer team
+route.post('/getSwimmerTeams',  check('swimmer_id').not().isEmpty(), (req, res)=>{
     let obj_trainning = req.body.swimmer_id
+    let validat_result = valid_class.valid_chack(req);
 
-    team.getSwimmerTeams(obj_trainning).then((data) => {
-        res.status(200).json({isTrue: true, teams: data});   
-        res.end(); 
-    }).catch(err => {
-        res.json({isTrue: false, error: err})
-        res.status(500)
-        res.end()
-    })
+    if(validat_result.next().value == false){
+        res.status(422).json({ errors: valid_class.error_valid(validat_result.next().value[0].param) });
+    }else{
+        team.getSwimmerTeams(obj_trainning).then((data) => {
+            res.status(200).json({isTrue: true, teams: data});   
+            res.end(); 
+        }).catch(err => {
+            res.json({isTrue: false, error: err})
+            res.status(500)
+            res.end()
+        })
+    }
 });
 
-//get team by team _id 
-route.post('/getTeamById', (req, res)=>{
+//Details - get team by team_id  
+//require - team_id 
+//return  - team by team_id 
+route.post('/getTeamById', check('team_id').not().isEmpty(), (req, res)=>{
     var obj_trainning = JSON.parse(JSON.stringify({
         team_id:    req.body.team_id,
     }));
+    let validat_result = valid_class.valid_chack(req);
 
-    team.getTeamById(obj_trainning).then((data) => {
-        res.status(200).json({isTrue: true, team: data});   
-        res.end(); 
-    }).catch(err => {
-        res.json({isTrue: false, error: err})
-        res.status(500)
-        res.end()
-    })
+    if(validat_result.next().value == false){
+        res.status(422).json({ errors: valid_class.error_valid(validat_result.next().value[0].param) });
+    }else{
+        team.getTeamById(obj_trainning).then((data) => {
+            res.status(200).json({isTrue: true, team: data});   
+            res.end(); 
+        }).catch(err => {
+            res.json({isTrue: false, error: err})
+            res.status(500)
+            res.end()
+        })
+    }
 });
 
-//add new swimmer to team
+//Details - add new swimmer to team  
 //require - swimmer_id & team_id
+//return  - boolean, true/false 
 route.post('/addSwimmerTeams',  check('swimmer_id').not().isEmpty(), check('team_id').not().isEmpty(), (req, res)=>{
 
-    let validat = valid_chack(validationResult(req));
+    let validat_result = valid_class.valid_chack(req);
 
-    if(validat.next().value == false){
-        res.status(422).json({ errors: `${validat.next().value[0].param} is require` });
+    if(validat_result.next().value == false){
+        res.status(422).json({ errors: valid_class.error_valid(validat_result.next().value[0].param) });
     }else{
         team.addSwimmerTeams({"team": req.body.team_id, "swimmer": req.body.swimmer_id}).then((data) => {
             res.status(200).json({isTrue: true, teams: "team update"});   
@@ -115,15 +131,15 @@ route.post('/addSwimmerTeams',  check('swimmer_id').not().isEmpty(), check('team
 });
 
 
-//delete swimmer from team
+//Details - delete swimmer from team
 //require - swimmer_id & team_id
 //return  - boolean true\false
 route.post('/deleteSwimmerTeams',  check('swimmer_id').not().isEmpty(), check('team_id').not().isEmpty(), (req, res)=>{
 
-    let validat = valid_chack(validationResult(req));
+    let validat_result = valid_class.valid_chack(req);
 
-    if(validat.next().value == false){
-        res.status(422).json({ errors: `${validat.next().value[0].param} is require` });
+    if(validat_result.next().value == false){
+        res.status(422).json({ errors: valid_class.error_valid(validat_result.next().value[0].param) });
     }else{
         team.deleteSwimmerTeams({"team": req.body.team_id, "swimmer": req.body.swimmer_id}).then((data) => {
             res.status(200).json({isTrue: true, teams: "user delete from the team"});   
