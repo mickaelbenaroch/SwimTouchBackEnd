@@ -1,10 +1,11 @@
 'use strict';
 
-const {express, logger, models} = require('../configuration/config'),
-route           = express.route,
-check           = logger.check_body,
-notification    = models.notification,
-valid_class     = require('../controllers/API/validate');
+const { check } = require('express-validator/check'),
+express         = require('express'),
+route           = express.Router(),
+notification    = require('../models/notification'),
+valid_class     = require('../controllers/API/validate'),
+log             = require('../controllers/API/logger');
 
 //Details - get notification by swimmer_id
 //require - swimmer_id
@@ -32,13 +33,13 @@ route.post('/getNotification', check('swimmer_id').not().isEmpty(), (req, res) =
 route.post('/setNotification', check('swimmer_id').not().isEmpty(), check('message').not().isEmpty(), check('priority').not().isEmpty(),
     check('coachmail').not().isEmpty(), check('date').not().isEmpty(),check('title').not().isEmpty(), (req, res) => {
 
-    let swimmer_id = req.body.swimmer_id,
-    message =  req.body.message,
-    title =  req.body.title,
-    coachmail =  req.body.coachmail,
-    date =  req.body.date,
-    coachId =  req.body.coachId,
-    priority  =  req.body.priority;
+    let swimmer_id  = req.body.swimmer_id,
+    message         = req.body.message,
+    title           = req.body.title,
+    coachmail       = req.body.coachmail,
+    date            = req.body.date,
+    coachId         = req.body.coachId,
+    priority        = req.body.priority;
     
     let validat_result = valid_class.valid_chack(req);
 

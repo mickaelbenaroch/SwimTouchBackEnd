@@ -1,18 +1,17 @@
 'use strict';
 
-
-const {express, logger, models} = require('../configuration/config'),
-route       = express.route,
-login       = models.login,
-check       = logger.check_body,
-valid_class = require('../controllers/API/validate'),
-log         = require('../controllers/API/logger');
+const { check, validationResult } = require('express-validator/check'),
+express         = require('express'),
+route           = express.Router(),
+login           = require('../models/login'),
+valid_class     = require('../controllers/API/validate'),
+log             = require('../controllers/API/logger');
 
 //Details - signup new user
 //require - user & pwd 
 //return  - boolean, true/false
 route.post('/signup', check('user').isEmail(), check('pwd').isLength({ min: 8 }), (req, res) => {
-    var profile = {
+    let profile = {
         user:       req.body.user, 
         first_name: req.body.first_name,
         last_name:  req.body.last_name,
@@ -65,7 +64,7 @@ route.post('/upload', check('picture').not().isEmpty(), (req, res) => {
 //require - email & pass 
 //return  - boolean, true/fals & user profile
 route.post('/', check('email').not().isEmpty(), check('pass').not().isEmpty(), (req, res)=>{
-    var user_query = req.body.email, 
+    let user_query = req.body.email, 
         pass_query = req.body.pass
 
     let validat_result = valid_class.valid_chack(req);

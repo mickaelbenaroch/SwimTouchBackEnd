@@ -1,25 +1,23 @@
 'use strict';
 
-var db = require('./db'); 
+let db = require('./db'); 
 
-//create new team & is records document
+//Details - create new team
 exports.createTeam = (obj_team) => {
     return new Promise(( res, rej) => {
         let team = db.get().collection('st-team');
         
         team.insertOne(obj_team, (err, result) => {
             if(err)
-                throw err;
+                rej("create new team failed")
             else{
                 res(obj_team._id)
             }
         });
-    }).catch(error => {
-        rej("create new team failed")
     });
 }
 
-//get all team
+//Details - get all team
 exports.getTeams = () => {
     return new Promise(function(resolve, reject) {
         let team = db.get().collection('st-team');
@@ -51,8 +49,7 @@ exports.getTeams = () => {
     });
 }
 
-
-//get team by coach mail
+//Details - get team by coach mail
 exports.team = (coach) => {
     return new Promise(function(resolve, reject) {
 
@@ -81,15 +78,12 @@ exports.team = (coach) => {
 }
 
 
-//regular get traning (multi key)
+//Details - get swimmer team 
 exports.getSwimmerTeams = (obj_trainning) => {
     let team = db.get().collection('st-team');
     
     return new Promise(( res, rej) => {
         team.find({"swimmers": {$all: [ obj_trainning ] }}).toArray((err, result) => {
-             console.log(result)
-             console.log("sdsdsd")
-
             if(err || result === undefined || result.length == 0)
                 rej("error to get Exercises")
             else
@@ -99,7 +93,7 @@ exports.getSwimmerTeams = (obj_trainning) => {
     });
 }
 
-//regular get traning (multi key)
+//Details - get team by team_id  
 exports.getTeamById = (obj_trainning) => {
     let team = db.get().collection('st-team');
 
@@ -114,8 +108,7 @@ exports.getTeamById = (obj_trainning) => {
     });
 }
 
-//add new swimmer to team
-//require - swimmer_id & team_id
+//Details - add new swimmer to team  
 exports.addSwimmerTeams = (obj_team) => {
     let team = db.get().collection('st-team');
     
@@ -129,8 +122,7 @@ exports.addSwimmerTeams = (obj_team) => {
     });
 }
 
-//delete swimmer from team
-//require - swimmer_id & team_id
+//Details - delete swimmer from team
 exports.deleteSwimmerTeams = (obj_team) => {
     let team = db.get().collection('st-team');
     

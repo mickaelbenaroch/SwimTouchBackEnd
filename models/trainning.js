@@ -1,8 +1,8 @@
 'use strict';
 
-var db = require('./db'); 
+let db = require('./db'); 
 
-//create new trainning & is records document
+//Details - create new trainning & is records document
 exports.createTrainning = (obj_trainning) => {
     return new Promise(( res, rej) => {
         let trainning = db.get().collection('st-trainning');
@@ -10,23 +10,20 @@ exports.createTrainning = (obj_trainning) => {
         
         trainning.insertOne(obj_trainning, (err, result) => {
             if(err)
-                throw err;
+                rej("create new trainning faild")
             else{
                 records.insertOne({_id: obj_trainning._id},(err, result) => {
                     if(err)
-                        throw err;
+                        rej("create new trainning faild")
                     else    
                         res(obj_trainning._id)
                 });
             }
         });
-    }).catch(error => {
-        rej("create new trainning faild")
-    });
+    })
 }
 
-
-//regular get traning (multi key)
+//Details - get training 
 exports.getTrainnings = (obj_trainning) => {
     return new Promise(( res, rej) => {
         let trainning = db.get().collection('st-trainning');
@@ -39,8 +36,7 @@ exports.getTrainnings = (obj_trainning) => {
     }); 
 }
 
-
-//regular get traning (multi key)
+//Details - get swimmer trainning 
 exports.getSwimmerTrainnings = (obj_trainning) => {
     let trainning = db.get().collection('st-trainning');
     
@@ -55,7 +51,7 @@ exports.getSwimmerTrainnings = (obj_trainning) => {
     });
 }
 
-//update trainning
+//Details   - update trainning
 exports.updateTrainnings = (obj, trainning_id) => {
     let trainning = db.get().collection('st-trainning');
     
@@ -65,7 +61,6 @@ exports.updateTrainnings = (obj, trainning_id) => {
                 rej("error to update trainning")
             else
                 res(result);  
-           
         }));
     });
 }

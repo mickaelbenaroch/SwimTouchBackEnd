@@ -1,7 +1,7 @@
 'use strict';
 
-var db = require('./db'); 
-var ObjectID = require('mongodb').ObjectID;
+let db = require('./db'); 
+let ObjectID = require('mongodb').ObjectID;
 
 //Details - get notification by swimmer_id
 exports.getNotification = (obj_notification) => {

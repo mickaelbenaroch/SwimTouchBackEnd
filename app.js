@@ -1,27 +1,29 @@
-/*************************/
-//    swimtouch server   //
-//       17/01/2019      //
-/************************/
+/**********************************************************************************/
+//                        SwimTouch Server                                        //
+//   author: beni valotker, mickael benaroch, lior shahar, nikita bronshtein      //
+//   date:   17/01/2019                                                           //
+/*********************************************************************************/
 'use strict';
 
-const log = require('./controllers/API/logger');
-const {db, server, express, corss, logger} = require('./configuration/config'), 
-app            = express.app,
+const { db, server, corss } = require('./configuration/config'), 
+express        = require('express'),
+app            = express(),
 db_model       = db.db_model,
 bodyParser     = corss.bodyParser,
-cors           = corss.cors_parser;
-
+cors           = corss.cors_parser,
+log            = require('./controllers/API/logger');
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: true}));
-
 app.use(bodyParser.json({limit: '50mb'}));
 
-//enable cors
+//enable corss
 app.use(cors());
 
+//route to all controller
 app.use(require('./controllers'));
 
+//connect to mongodb
 db_model.connect(db.connection.uri, (err) => {
    if(err){
         console.log('Unable to connect to MongoDB.');

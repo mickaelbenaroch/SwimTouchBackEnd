@@ -1,40 +1,59 @@
 'use strict';
 
-const express = require('express'),
-route = express.Router(),
-profile = require('../models/profile');
+const { check } = require('express-validator/check'),
+express         = require('express'),
+route           = express.Router(),
+profile         = require('../models/profile'),
+valid_class     = require('../controllers/API/validate'),
+log             = require('../controllers/API/logger');
 
-//get user profile by email (1 profile get)
-route.post('/', (req, res)=>{
-    var user_query = req.body.email;
+//Details - get user profile by email
+//require - email 
+//return  - user profile
+route.post('/', check('email').not().isEmpty(), (req, res)=>{
+    let email          = req.body.email;
+    let validat_result = valid_class.valid_chack(req);
 
-    profile.getProfile(user_query).then((data) => {
-        res.status(200).json({isTrue: true, data});   
-        res.end(); 
-    }).catch(err => {
-        res.json({isTrue: false, error: err})
-        res.status(500)
-        res.end()
-    })
+    if(validat_result.next().value == false){
+        res.status(422).json({ errors: valid_class.error_valid(validat_result.next().value[0].param) });
+    }else{
+        profile.getProfile(email).then((data) => {
+            res.status(200).json({isTrue: true, data});   
+            res.end(); 
+        }).catch(err => {
+            res.json({isTrue: false, error: err})
+            res.status(500)
+            res.end()
+        })
+    }
 });
 
-//get all profile by group (all group profile)
-route.post('/getGroup', (req, res)=>{
-    var group_query = req.body.group;
+//Details - get all profile by group type
+//require - group 
+//return  - user profile 
+route.post('/getGroup', check('group').not().isEmpty(), (req, res)=>{
+    let group_query     = req.body.group;
+    let validat_result  = valid_class.valid_chack(req);
 
-    profile.getGroup(group_query).then((data) => {
-        res.status(200).json({isTrue: true, data});   
-        res.end(); 
-    }).catch(err => {
-        res.json({isTrue: false, error: err})
-        res.status(500)
-        res.end()
-    })
+    if(validat_result.next().value == false){
+        res.status(422).json({ errors: valid_class.error_valid(validat_result.next().value[0].param) });
+    }else{
+        profile.getGroup(group_query).then((data) => {
+            res.status(200).json({isTrue: true, data});   
+            res.end(); 
+        }).catch(err => {
+            res.json({isTrue: false, error: err})
+            res.status(500)
+            res.end()
+        })
+    }
 });
 
-//get all profile by key object (like a filter)
+//Details - get all profile by key object
+//require - none (all fields optional)
+//return  - user profile 
 route.post('/getProfile', (req, res)=>{
-    var obj_profile = JSON.parse(JSON.stringify({
+    let obj_profile = JSON.parse(JSON.stringify({
         user:       req.body.user,
         first_name: req.body.first_name, 
         last_name:  req.body.last_name,

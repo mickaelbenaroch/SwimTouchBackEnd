@@ -1,6 +1,6 @@
 const MongoClient = require('mongodb').MongoClient;
 
-var collection = {
+let collection = {
     db: null,
 }
 

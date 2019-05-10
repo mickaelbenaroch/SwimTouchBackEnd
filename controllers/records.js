@@ -2,11 +2,14 @@
 
 const express = require('express'),
 route = express.Router(),
-recor = require('../models/records');
+recor = require('../models/records'),
+log   = require('../controllers/API/logger');
 
-//set new records
-route.post('/setrecords', (req, res) => {
-        var record = {
+//Details - set new records
+//require - none
+//return  - boolean, true\false
+route.post('/setrecords',  (req, res) => {
+        let record = {
             _id:         req.body._id,
             date:        req.body.date,
             jump_time:   req.body.jump_time,

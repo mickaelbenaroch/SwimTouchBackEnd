@@ -1,6 +1,6 @@
 'use strict';
 
-var db = require('./db'); 
+let db = require('./db'); 
 const bcrypt = require('bcrypt');
 const log = require('../controllers/API/logger');
 

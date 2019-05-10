@@ -3,7 +3,6 @@ const {logger} = require('../../configuration/config');
 const validationResult = logger.validation_Result;
 
 class Validate {
-    
     //chack for empty request
     static * valid_chack( req_body ){ 
         let result = validationResult(req_body)
