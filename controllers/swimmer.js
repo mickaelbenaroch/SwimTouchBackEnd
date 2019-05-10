@@ -12,7 +12,7 @@ log         = require('../controllers/API/logger');
 //require - none
 //return  - boolean, true\false
 route.post('/', (req, res)=>{
-    var obj_swimmer = {
+    let obj_swimmer = {
         _id:        uuidv4(),
         name:       req.body.name, 
         height:     req.body.height,
@@ -37,14 +37,14 @@ route.post('/', (req, res)=>{
 //require - none (if body req is empty , resualt res get all swimmer)
 //return  - swimmer 
 route.post('/getswimmers', (req, res)=>{
-    var obj_swimmer = JSON.parse(JSON.stringify({
+    let obj_swimmer = JSON.parse(JSON.stringify({
         _id:         req.body._id,
         name:        req.body.name, 
         height:      req.body.height,
         group:       req.body.group,
         age:         req.body.age,
         coachmail:   req.body.coachmail,
-        picture: req.body.picture
+        picture:     req.body.picture
     }));
 
     swimmer.getSwimmers(obj_swimmer).then((data) => {

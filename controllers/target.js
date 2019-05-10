@@ -12,16 +12,16 @@ log         = require('../controllers/API/logger');
 //require - none
 //return  - boolean, true/false
 route.post('/swimmertarget', (req, res)=>{
-    var obj_swimmer_target = {
-        _id:            uuidv4(),
-        distance:       req.body.distance, 
-        target:         req.body.targetTime,
-        triesToImprove: req.body.triesToImprove,
-        style:          req.body.style,
-        targetTime:     req.body.targetTime,
-        swimmer_ref:    req.body.swimmer_ref,
-        date:           req.body.date,
-        done:           req.body.done,
+    let obj_swimmer_target = {
+        _id:                        uuidv4(),
+        distance:                   req.body.distance, 
+        target:                     req.body.targetTime,
+        triesToImprove:             req.body.triesToImprove,
+        style:                      req.body.style,
+        targetTime:                 req.body.targetTime,
+        swimmer_ref:                req.body.swimmer_ref,
+        date:                       req.body.date,
+        done:                       req.body.done,
         notification_has_been_send: req.body.notification_has_been_send
    };
 
@@ -39,8 +39,8 @@ route.post('/swimmertarget', (req, res)=>{
 //require - swimmer_ref
 //return  - swimmer target
 route.post('/getswimmertarget', check('swimmer_ref').not().isEmpty(), (req, res)=>{
-    var obj_swimmer_target = JSON.parse(JSON.stringify({
-            swimmer_ref:    req.body.swimmer_ref
+    let obj_swimmer_target = JSON.parse(JSON.stringify({
+        swimmer_ref: req.body.swimmer_ref
     }));
 
     let validat_result = valid_class.valid_chack(req);
@@ -63,16 +63,16 @@ route.post('/getswimmertarget', check('swimmer_ref').not().isEmpty(), (req, res)
 //require - none
 //return  - boolean, true/false
 route.post('/teamtarget', (req, res)=>{
-    var obj_team_target = {
-        _id:            uuidv4(),
-        distance:       req.body.distance, 
-        target:         req.body.targetTime,
-        triesToImprove: req.body.triesToImprove,
-        style:          req.body.style,
-        targetTime:     req.body.targetTime,
-        team_id:        req.body.team_ref,
-        date:           req.body.date,
-        done:           req.body.done,
+    let obj_team_target = {
+        _id:                        uuidv4(),
+        distance:                   req.body.distance, 
+        target:                     req.body.targetTime,
+        triesToImprove:             req.body.triesToImprove,
+        style:                      req.body.style,
+        targetTime:                 req.body.targetTime,
+        team_id:                    req.body.team_ref,
+        date:                       req.body.date,
+        done:                       req.body.done,
         notification_has_been_send: req.body.notification_has_been_send
    };
 
@@ -90,8 +90,8 @@ route.post('/teamtarget', (req, res)=>{
 //require - team_id
 //return  - team target
 route.post('/getteamtarget', check('team_id').not().isEmpty(), (req, res)=>{
-    var obj_team_target = JSON.parse(JSON.stringify({
-            team_id:    req.body.team_id
+    let obj_team_target = JSON.parse(JSON.stringify({
+        team_id: req.body.team_id
     }));
         
     let validat_result = valid_class.valid_chack(req);
@@ -114,7 +114,7 @@ route.post('/getteamtarget', check('team_id').not().isEmpty(), (req, res)=>{
 //require - _id (swimmer id)
 //return  - boolean,  true/false
 route.post('/updateswimmertarget', check('_id').not().isEmpty(), (req, res)=>{
-    var obj_team_target = JSON.parse(JSON.stringify({
+    let obj_team_target = JSON.parse(JSON.stringify({
             _id:                        req.body._id,
             done:                       req.body.done,
             notification_has_been_send: req.body.notification_has_been_send
@@ -139,7 +139,7 @@ route.post('/updateswimmertarget', check('_id').not().isEmpty(), (req, res)=>{
 //require - _id (team id)
 //return  - boolean,  true/false
 route.post('/updateteamtarget', check('_id').not().isEmpty(), (req, res)=>{
-    var obj_team_target = JSON.parse(JSON.stringify({
+    let obj_team_target = JSON.parse(JSON.stringify({
             _id:                        req.body._id,
             done:                       req.body.done,
             notification_has_been_send: req.body.notification_has_been_send

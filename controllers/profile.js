@@ -11,7 +11,7 @@ log             = require('../controllers/API/logger');
 //require - email 
 //return  - user profile
 route.post('/', check('email').not().isEmpty(), (req, res)=>{
-    let email = req.body.email;
+    let email          = req.body.email;
     let validat_result = valid_class.valid_chack(req);
 
     if(validat_result.next().value == false){
@@ -32,8 +32,8 @@ route.post('/', check('email').not().isEmpty(), (req, res)=>{
 //require - group 
 //return  - user profile 
 route.post('/getGroup', check('group').not().isEmpty(), (req, res)=>{
-    var group_query = req.body.group;
-    let validat_result = valid_class.valid_chack(req);
+    let group_query     = req.body.group;
+    let validat_result  = valid_class.valid_chack(req);
 
     if(validat_result.next().value == false){
         res.status(422).json({ errors: valid_class.error_valid(validat_result.next().value[0].param) });
@@ -53,7 +53,7 @@ route.post('/getGroup', check('group').not().isEmpty(), (req, res)=>{
 //require - none (all fields optional)
 //return  - user profile 
 route.post('/getProfile', (req, res)=>{
-    var obj_profile = JSON.parse(JSON.stringify({
+    let obj_profile = JSON.parse(JSON.stringify({
         user:       req.body.user,
         first_name: req.body.first_name, 
         last_name:  req.body.last_name,

@@ -11,7 +11,7 @@ log             = require('../controllers/API/logger');
 //require - user & pwd 
 //return  - boolean, true/false
 route.post('/signup', check('user').isEmail(), check('pwd').isLength({ min: 8 }), (req, res) => {
-    var profile = {
+    let profile = {
         user:       req.body.user, 
         first_name: req.body.first_name,
         last_name:  req.body.last_name,
@@ -64,7 +64,7 @@ route.post('/upload', check('picture').not().isEmpty(), (req, res) => {
 //require - email & pass 
 //return  - boolean, true/fals & user profile
 route.post('/', check('email').not().isEmpty(), check('pass').not().isEmpty(), (req, res)=>{
-    var user_query = req.body.email, 
+    let user_query = req.body.email, 
         pass_query = req.body.pass
 
     let validat_result = valid_class.valid_chack(req);

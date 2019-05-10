@@ -9,7 +9,7 @@ log   = require('../controllers/API/logger');
 //require - none
 //return  - boolean, true\false
 route.post('/setrecords',  (req, res) => {
-        var record = {
+        let record = {
             _id:         req.body._id,
             date:        req.body.date,
             jump_time:   req.body.jump_time,

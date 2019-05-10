@@ -12,15 +12,15 @@ log         = require('../controllers/API/logger');
 //require - none
 //return  - boolean,  true/false
 route.post('/', (req, res)=>{
-    var obj_trainning = {
-        _id:        uuidv4(),
-        name:       req.body.name, 
-        coachmail:  req.body.coachmail,
-        exercises:  req.body.exercises,
-        team_id:    req.body.team_id,
-        date:       req.body.date,
+    let obj_trainning = {
+        _id:            uuidv4(),
+        name:           req.body.name, 
+        coachmail:      req.body.coachmail,
+        exercises:      req.body.exercises,
+        team_id:        req.body.team_id,
+        date:           req.body.date,
         exercisesCount: req.body.exercisesCount,
-        distance:   req.body.distance,
+        distance:       req.body.distance,
         
     };
 
@@ -38,13 +38,13 @@ route.post('/', (req, res)=>{
 //require - none (if boody req empty, response return empty)
 //return  - training
 route.post('/getTrainnings', (req, res)=>{
-    var obj_trainning = JSON.parse(JSON.stringify({
+    let obj_trainning = JSON.parse(JSON.stringify({
         _id:        req.body._id,
         name:       req.body.name, 
-        coachmail:      req.body.coachmail,
-        exercises:      req.body.exercises,
-        team_id:      req.body.team_id,
-        distance:     req.body.distance
+        coachmail:  req.body.coachmail,
+        exercises:  req.body.exercises,
+        team_id:    req.body.team_id,
+        distance:   req.body.distance
     }));
 
     trainning.getTrainnings(obj_trainning).then((data) => {
@@ -61,8 +61,8 @@ route.post('/getTrainnings', (req, res)=>{
 //require - swimmer_id
 //return  - swimmer training
 route.post('/getSwimmerTrainnings', check('swimmer_id').not().isEmpty(), (req, res)=>{
-    let obj_trainning = req.body.swimmer_id
-    let validat_result = valid_class.valid_chack(req);
+    let obj_trainning   = req.body.swimmer_id
+    let validat_result  = valid_class.valid_chack(req);
 
     if(validat_result.next().value == false){
         res.status(422).json({ errors: valid_class.error_valid(validat_result.next().value[0].param) });

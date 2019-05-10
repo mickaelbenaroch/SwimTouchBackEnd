@@ -12,7 +12,7 @@ log         = require('../controllers/API/logger');
 //require - none
 //return  - boolean, true/false
 route.post('/', (req, res)=>{
-    var obj_team = {
+    let obj_team = {
         _id:        uuidv4(),
         name:       req.body.name, 
         coachmail:  req.body.coachmail,
@@ -48,8 +48,8 @@ route.post('/getteams', (req, res)=>{
 //return  - coachmail team
 route.post('/team', check('coachmail').not().isEmpty(), (req, res)=>{
 
-    let coach = req.body.coachmail;
-    let validat_result = valid_class.valid_chack(req);
+    let coach           = req.body.coachmail;
+    let validat_result  = valid_class.valid_chack(req);
 
     if(validat_result.next().value == false){
         res.status(422).json({ errors: valid_class.error_valid(validat_result.next().value[0].param) });
@@ -69,8 +69,8 @@ route.post('/team', check('coachmail').not().isEmpty(), (req, res)=>{
 //require - swimmer_id
 //return  - swimmer team
 route.post('/getSwimmerTeams',  check('swimmer_id').not().isEmpty(), (req, res)=>{
-    let obj_trainning = req.body.swimmer_id
-    let validat_result = valid_class.valid_chack(req);
+    let obj_trainning   = req.body.swimmer_id
+    let validat_result  = valid_class.valid_chack(req);
 
     if(validat_result.next().value == false){
         res.status(422).json({ errors: valid_class.error_valid(validat_result.next().value[0].param) });
@@ -90,8 +90,8 @@ route.post('/getSwimmerTeams',  check('swimmer_id').not().isEmpty(), (req, res)=
 //require - team_id 
 //return  - team by team_id 
 route.post('/getTeamById', check('team_id').not().isEmpty(), (req, res)=>{
-    var obj_trainning = JSON.parse(JSON.stringify({
-        team_id:    req.body.team_id,
+    let obj_trainning = JSON.parse(JSON.stringify({
+        team_id: req.body.team_id,
     }));
     let validat_result = valid_class.valid_chack(req);
 

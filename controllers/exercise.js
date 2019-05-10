@@ -12,7 +12,7 @@ log             = require('../controllers/API/logger');
 //require - none
 //return  - boolean, true/false
 route.post('/', (req, res)=>{
-    var obj_exercise = {
+    let obj_exercise = {
         _id:                uuidv4(),
         date:               req.body.date, 
         coach:              req.body.coach,
@@ -42,7 +42,7 @@ route.post('/', (req, res)=>{
 //require - none (exercises fields is optional) - if empty req body return all exercises
 //return  - exercises data by request
 route.post('/getExercises', (req, res)=>{
-    var obj_exercise = JSON.parse(JSON.stringify({
+    let obj_exercise = JSON.parse(JSON.stringify({
         _id:                req.body._id,
         date:               req.body.date, 
         coach:              req.body.coach,
@@ -74,7 +74,7 @@ route.post('/getExercises', (req, res)=>{
 //return  - boolean, true/false
 route.post('/updateExercise', check('id').not().isEmpty(), (req, res)=>{
 
-    var obj_exercise = JSON.parse(JSON.stringify({
+    let obj_exercise = JSON.parse(JSON.stringify({
         id:                 req.body.id,
         date:               req.body.date, 
         coach:              req.body.coach,
@@ -111,8 +111,8 @@ route.post('/updateExercise', check('id').not().isEmpty(), (req, res)=>{
 //return  - swimmer exercise
 route.post('/getSwimmerExercises', check('_id').not().isEmpty(), (req, res)=>{
 
-    let obj_exercise = req.body._id;
-    let validat_result = valid_class.valid_chack(req);
+    let obj_exercise    = req.body._id;
+    let validat_result  = valid_class.valid_chack(req);
 
     if(validat_result.next().value == false){
         res.status(422).json({ errors: valid_class.error_valid(validat_result.next().value[0].param) });
@@ -133,7 +133,7 @@ route.post('/getSwimmerExercises', check('_id').not().isEmpty(), (req, res)=>{
 //require - exercise_id & training_id (field to update is optional)
 //return   - bool & mogodb result
 route.post('/update', check('exercise_id').not().isEmpty(), check('training_id').not().isEmpty(),  (req, res)=>{
-    let obj_exercise = req.body.exercise_id
+    let obj_exercise  = req.body.exercise_id
     let obj_training  = req.body.training_id
 
     let obj = JSON.parse(JSON.stringify({

@@ -33,9 +33,9 @@ route.post('/swimmer', check('swimmer_id').not().isEmpty() ,(req, res)=>{
 //return  - user records
 route.post('/date_record', check('start_date').not().isEmpty(), check('swimmer_ref').not().isEmpty() ,(req, res)=>{
 
-    var obj_records = JSON.parse(JSON.stringify({
-        start_date: req.body.start_date,
-        end_date: req.body.end_date,
+    let obj_records = JSON.parse(JSON.stringify({
+        start_date:  req.body.start_date,
+        end_date:    req.body.end_date,
         swimmer_ref: req.body.swimmer_ref
     }));
 
