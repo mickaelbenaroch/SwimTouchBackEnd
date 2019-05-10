@@ -1,6 +1,6 @@
 'use strict';
 
-var db = require('./db'); 
+let db = require('./db'); 
 
 //Details - create new swimmer & is records document
 exports.createSwimmer = (obj_swimmer) => {

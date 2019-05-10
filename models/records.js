@@ -1,6 +1,6 @@
 'use strict';
 
-var db = require('./db'); 
+let db = require('./db'); 
 
 //Details - set new records
 exports.setRecords = (records) => {

@@ -1,6 +1,6 @@
 'use strict';
 
-var db = require('./db'); 
+let db = require('./db'); 
 
 //Details - create new trainning & is records document
 exports.createTrainning = (obj_trainning) => {

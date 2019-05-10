@@ -1,6 +1,6 @@
 'use strict';
 
-var db = require('./db'); 
+let db = require('./db'); 
 
 //Details - create new team
 exports.createTeam = (obj_team) => {

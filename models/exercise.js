@@ -1,6 +1,6 @@
 'use strict';
 
-var db = require('./db'); 
+let db = require('./db'); 
 
 //Details - create new exercise
 exports.createExercise = (obj_exercise) => {
@@ -51,7 +51,7 @@ exports.updateExercises = (obj_exercise) => {
                 data.exercises.forEach(element => {
                    if(element.id == obj_exercise.id){
                        element.routes = obj_exercise.routes;
-                       var trainning_id = data._id;
+                       let trainning_id = data._id;
                        trainning.updateOne({"_id":trainning_id},{"$set":{"exercises": data.exercises}}).then(ress =>{
                            res(ress);
                        })
