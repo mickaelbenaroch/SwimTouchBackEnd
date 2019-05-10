@@ -5,8 +5,9 @@
 'use strict';
 
 const log = require('./controllers/API/logger');
-const {db, server, express, corss, logger} = require('./configuration/config'), 
-app            = express.app,
+const {db, server, corss, logger} = require('./configuration/config'), 
+express        = require('express'),
+app            = express(),
 db_model       = db.db_model,
 bodyParser     = corss.bodyParser,
 cors           = corss.cors_parser;

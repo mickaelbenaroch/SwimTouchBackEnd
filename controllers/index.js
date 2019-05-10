@@ -1,8 +1,8 @@
 //load all controller 
 'use strict';
 
-const { express } = require('../configuration/config'),
-router = express.route;
+const express = require('express'),
+router        = express.Router();
 
 router.use('/login', require('./login'))
 router.use('/profile', require('./profile'))

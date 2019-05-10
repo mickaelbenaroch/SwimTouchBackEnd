@@ -1,9 +1,9 @@
 'use strict';
 
-const {express, logger, models} = require('../configuration/config'),
-route = express.route,
-recor = models.records,
-log         = require('../controllers/API/logger');
+const express = require('express'),
+route = express.Router(),
+recor = require('../models/records'),
+log   = require('../controllers/API/logger');
 
 //Details - set new records
 //require - none

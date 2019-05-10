@@ -1,10 +1,12 @@
 'use strict';
 
-const {express, logger, models} = require('../configuration/config'),
-route           = express.route,
-check           = logger.check_body,
-notification    = models.notification,
-valid_class     = require('../controllers/API/validate');
+const { check } = require('express-validator/check'),
+express         = require('express'),
+route           = express.Router(),
+notification    = require('../models/notification'),
+valid_class     = require('../controllers/API/validate'),
+log             = require('../controllers/API/logger');
+
 
 //Details - get notification by swimmer_id
 //require - swimmer_id

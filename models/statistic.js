@@ -1,9 +1,8 @@
 'use strict';
 
 let db = require('./db');  
-let db_class = require('./testDbopp');
 
-//get all swimmer records
+//Details - get all swimmer records
 exports.getStatisticByswimmer = (swimmer_ref) => {
     console.log(swimmer_ref)
     let db_table = db.get().collection('st-record');

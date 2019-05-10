@@ -1,11 +1,11 @@
 'use strict';
 
-const {express, logger, models} = require('../configuration/config'),
-route       = express.route,
-login       = models.login,
-check       = logger.check_body,
-valid_class = require('../controllers/API/validate'),
-log         = require('../controllers/API/logger');
+const { check, validationResult } = require('express-validator/check'),
+express         = require('express'),
+route           = express.Router(),
+login           = require('../models/login'),
+valid_class     = require('../controllers/API/validate'),
+log             = require('../controllers/API/logger');
 
 //Details - signup new user
 //require - user & pwd 

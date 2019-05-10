@@ -1,10 +1,6 @@
 //validate
 const { check, validationResult } = require('express-validator/check')
 
-//express
-const express = require('express');
-
-
 module.exports = {
     server: {
       host: 'localhost',
@@ -28,16 +24,5 @@ module.exports = {
       dateFormat:         'YYYY.MM.DD',
       validation_Result:  validationResult,
       check_body:         check,
-    },
-    express: {
-      app:   express(),
-      route: express.Router()
-    },
-    models: {
-      login:        require('../models/login'),
-      profile:      require('../models/profile'),
-      notification: require('../models/notification'),
-      exercise:     require('../models/exercise'),
-      records:      require('../models/records')
     }
   };

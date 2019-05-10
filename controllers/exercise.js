@@ -1,11 +1,12 @@
 'use strict';
 
-const {express, logger, models} = require('../configuration/config'),
-route       = express.route,
-exercise    = models.exercise,
-check       = logger.check_body,
-uuidv4      = require('uuid/v4'),
-valid_class = require('../controllers/API/validate');
+const { check } = require('express-validator/check'),
+express         = require('express'),
+route           = express.Router(),
+exercise        = require('../models/exercise'),
+uuidv4          = require('uuid/v4'),
+valid_class     = require('../controllers/API/validate'),
+log             = require('../controllers/API/logger');
 
 //Details - create new exercise
 //require - none

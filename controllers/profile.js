@@ -1,11 +1,11 @@
 'use strict';
 
-const {express, logger, models} = require('../configuration/config'),
-route       = express.route,
-check       = logger.check_body,
-profile     = models.profile,
-valid_class = require('../controllers/API/validate'),
-log         = require('../controllers/API/logger');
+const { check } = require('express-validator/check'),
+express         = require('express'),
+route           = express.Router(),
+profile         = require('../models/profile'),
+valid_class     = require('../controllers/API/validate'),
+log             = require('../controllers/API/logger');
 
 //Details - get user profile by email
 //require - email 

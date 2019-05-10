@@ -1,32 +1,31 @@
 'use strict';
 
-const express = require('express'),
-route = express.Router(),
-records = require('../models/statistic'),
-{ check, validationResult } = require('express-validator/check');
+const { check, validationResult } = require('express-validator/check'), 
+express     = require('express'),
+route       = express.Router(),
+statistic   = require('../models/statistic'),
+valid_class = require('../controllers/API/validate'),
+log         = require('../controllers/API/logger');
 
-//chack validation
-function* valid_chack(validationResult){ 
-    let validate_array = validationResult.array();
-    if (!validationResult.isEmpty()) {
-        yield false;
-        yield validate_array;
+//Details - get all swimmer records
+//require - swimmer_id
+//return  - user profile
+route.post('/swimmer', check('swimmer_id').not().isEmpty() ,(req, res)=>{
+
+    let validat_result = valid_class.valid_chack(req);
+
+    if(validat_result.next().value == false){
+        res.status(422).json({ errors: valid_class.error_valid(validat_result.next().value[0].param) });
     }else{
-        return true;
+        statistic.getStatisticByswimmer(req.body.swimmer_id).then((data) => {
+            res.status(200).json({isTrue: true, records: data});   
+            res.end(); 
+        }).catch(err => {
+            res.json({isTrue: false, error: err})
+            res.status(500)
+            res.end()
+        })
     }
-}
-
-//get all swimmer records (swimmer is require)
-route.post('/swimmer', check('swimmer_ref').not().isEmpty() ,(req, res)=>{
-
-    records.getStatisticByswimmer(req.body.swimmer_ref).then((data) => {
-        res.status(200).json({isTrue: true, records: data});   
-        res.end(); 
-    }).catch(err => {
-        res.json({isTrue: false, error: err})
-        res.status(500)
-        res.end()
-    })
 });
 
 //get user records by date (start_date & swimmer name is require, end_date is optional)
@@ -43,7 +42,7 @@ route.post('/date_record', check('start_date').not().isEmpty(), check('swimmer_r
     if(validat.next().value == false){
         res.status(422).json({ errors: `${validat.next().value[0].param} is require` });
     }else{
-        records.getStatisticByDate(obj_records).then((data) => {
+        statistic.getStatisticByDate(obj_records).then((data) => {
             res.status(200).json({isTrue: true, records: data});   
             res.end(); 
         }).catch(err => {
@@ -62,7 +61,7 @@ route.post('/full_records', check('swimmer_id').not().isEmpty() ,(req, res)=>{
     if(validat.next().value == false){
         res.status(422).json({ errors: `${validat.next().value[0].param} is require` });
     }else{
-        records.getFullStatistic(req.body.swimmer_id).then((data) => {
+        statistic.getFullStatistic(req.body.swimmer_id).then((data) => {
             res.status(200).json({isTrue: true, records: data});   
             res.end(); 
         }).catch(err => {
@@ -82,7 +81,7 @@ route.post('/yesterday_records', check('coachmail').not().isEmpty() ,(req, res)=
     if(validat.next().value == false){
         res.status(422).json({ errors: `${validat.next().value[0].param} is require` });
     }else{
-        records.yesterday_records(req.body.coachmail).then((data) => {
+        statistic.yesterday_records(req.body.coachmail).then((data) => {
             res.status(200).json({isTrue: true, records: data});   
             res.end(); 
         }).catch(err => {
