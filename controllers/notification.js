@@ -7,7 +7,6 @@ notification    = require('../models/notification'),
 valid_class     = require('../controllers/API/validate'),
 log             = require('../controllers/API/logger');
 
-
 //Details - get notification by swimmer_id
 //require - swimmer_id
 //return  - swimmer notification

@@ -17,7 +17,7 @@ exports.getStatisticByswimmer = (swimmer_ref) => {
     });
 }
 
-//get swimmer records by name and date range
+//Details - get user records by date 
 exports.getStatisticByDate = (obj_records) => {
     let db_table = db.get().collection('st-record');
 
@@ -43,7 +43,7 @@ exports.getStatisticByDate = (obj_records) => {
     });
 }
 
-//get full swimmer records by name (with exercise & swimer details)
+//Details - get full swimmer records (with exercise & swimer details) 
 exports.getFullStatistic = (obj_records) => {
     const db_record = db.get().collection('st-record');
     const db_exercise = db.get().collection('st-exercise');
@@ -90,14 +90,13 @@ exports.getFullStatistic = (obj_records) => {
     }); 
 }
 
-//get yesterday traning 
+//Details - get yesterday traning 
 exports.yesterday_records = (coach_mail) => {
     let trainning = db.get().collection('st-trainning');
     let yesterday = new Date(new Date().setDate(new Date().getDate()-1));
    
    return new Promise(( res, rej) => {
         trainning.find({$and: [ {coachmail: coach_mail, date: yesterday.toISOString().split('T')[0] } ] }).toArray((err, result) => {
-            console.log(result)
             if(err || result === undefined || result.length == 0)
                 rej("error to get records")
             else
