@@ -1,8 +1,8 @@
 'use strict';
 
-var db = require('./db'); 
+let db = require('./db'); 
 
-//get user profile
+//Details - get user profile by email
 exports.getProfile = (email) => {
     return new Promise(( res, rej) => {
         let profile = db.get().collection('profile');
@@ -10,13 +10,13 @@ exports.getProfile = (email) => {
         profile.findOne({user: email}, (err, result) => {
             if(err || result === null)
                 rej("profile not exist")
-
-            res(result);
+            else
+                res(result);
         });
     });
 }
 
-//get all profile by group
+//Details - get all profile by group type
 exports.getGroup = (group) => {
     return new Promise(( res, rej) => {
         let profile = db.get().collection('profile');
@@ -31,7 +31,7 @@ exports.getGroup = (group) => {
 }
 
 
-//regular get profile (multi key)
+//Details - get all profile by key object
 exports.getProfile = (obj_profile) => {
     return new Promise(( res, rej) => {
         let profile = db.get().collection('profile');

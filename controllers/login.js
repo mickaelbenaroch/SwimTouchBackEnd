@@ -1,6 +1,5 @@
 'use strict';
 
-
 const {express, logger, models} = require('../configuration/config'),
 route       = express.route,
 login       = models.login,

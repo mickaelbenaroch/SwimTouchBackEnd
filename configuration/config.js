@@ -30,12 +30,14 @@ module.exports = {
       check_body:         check,
     },
     express: {
-      app: express(),
+      app:   express(),
       route: express.Router()
     },
     models: {
+      login:        require('../models/login'),
+      profile:      require('../models/profile'),
       notification: require('../models/notification'),
       exercise:     require('../models/exercise'),
-      login:        require('../models/login')
+      records:      require('../models/records')
     }
   };

@@ -1,7 +1,7 @@
 //load all controller 
 'use strict';
 
-const {express, controller} = require('../configuration/config'),
+const { express } = require('../configuration/config'),
 router = express.route;
 
 router.use('/login', require('./login'))

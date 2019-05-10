@@ -1,11 +1,14 @@
 'use strict';
 
-const express = require('express'),
-route = express.Router(),
-recor = require('../models/records');
+const {express, logger, models} = require('../configuration/config'),
+route = express.route,
+recor = models.records,
+log         = require('../controllers/API/logger');
 
-//set new records
-route.post('/setrecords', (req, res) => {
+//Details - set new records
+//require - none
+//return  - boolean, true\false
+route.post('/setrecords',  (req, res) => {
         var record = {
             _id:         req.body._id,
             date:        req.body.date,

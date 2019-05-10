@@ -2,10 +2,9 @@
 
 var db = require('./db'); 
 
-//signup new user
+//Details - set new records
 exports.setRecords = (records) => {
     return new Promise(( res, rej) => {
-
         let reject = rej, response = res;
         let record = db.get().collection('st-record');
 
