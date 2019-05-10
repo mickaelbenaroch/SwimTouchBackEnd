@@ -102,7 +102,7 @@ exports.getSwimmerTeams = (obj_trainning) => {
 //regular get traning (multi key)
 exports.getTeamById = (obj_trainning) => {
     let team = db.get().collection('st-team');
-    console.log(obj_trainning)
+
     return new Promise(( res, rej) => {
         team.find({"_id": obj_trainning.team_id}).toArray((err, result) => {
             if(err || result === undefined || result.length == 0)
