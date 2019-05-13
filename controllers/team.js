@@ -32,7 +32,7 @@ route.post('/', (req, res)=>{
 //Details - get all team
 //require - none
 //return  - all teams
-route.post('/getteams', (req, res)=>{
+route.get('/getteams', (req, res)=>{
     team.getTeams().then((data) => {
         res.status(200).json({isTrue: true, team: data});   
         res.end(); 
