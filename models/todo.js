@@ -1,8 +1,6 @@
 'use strict';
 
-const db     = require('./db'); 
-const bcrypt = require('bcrypt');
-
+const db = require('./db'); 
 
 //Details - insert new task
 exports.insertTask = (email, message) => {
@@ -10,11 +8,16 @@ exports.insertTask = (email, message) => {
 
     return new Promise((res, rej) => {
          try {
-            todo.updateOne({"user":email},{$set: {"picture": picture}},(suc,err) => {
-                res(suc)
+            let uid  =  Math.random().toString(36).substr(2, 9);
+            
+            todo.updateOne({"email":email}, {$push: {todo: {[uid]: message}}} ,(err,result) => {
+                if(err || result === undefined || result.length == 0)
+                    rej("error to insert task");
+                else
+                    res(result)
             });
         }catch (error) {
-            rej('error on pic upload');
+            rej('error to insert task');
         }
     })
 }
