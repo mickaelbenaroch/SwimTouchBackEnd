@@ -10,7 +10,7 @@ exports.insertTask = (email, message) => {
          try {
             let uid  =  Math.random().toString(36).substr(2, 9);
             
-            todo.updateOne({"email":email}, {$push: {todo: {[uid]: message}}} ,(err,result) => {
+            todo.updateOne({"email":email}, {$push: {todo: {id: uid, "message": message}}} ,(err,result) => {
                 if(err || result === undefined || result.length == 0)
                     rej("error to insert task");
                 else
@@ -36,6 +36,24 @@ exports.getTask = (email) => {
             });
         }catch (error) {
             rej('error to get task');
+        }
+    })
+}
+
+//Details - delete task
+exports.deleteTask = (email, task_id) => {
+    let todo = db.get().collection('st-todo');
+
+    return new Promise((res, rej) => {
+         try {
+            todo.updateOne({"email": email}, {$pull: {todo: {id: task_id}}}, (err, result) => {
+                if(err || result === undefined || result.length == 0)
+                    rej("error to delete task");
+                else
+                    res(result)
+            });
+        }catch (error) {
+            rej('error to delete task');
         }
     })
 }

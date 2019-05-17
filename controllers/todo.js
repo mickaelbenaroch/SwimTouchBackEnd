@@ -50,5 +50,25 @@ route.post('/getTask', check('email').not().isEmpty(), (req, res) => {
     }
 });
 
+//Details - delete task
+//require - email & task_id
+//return  - boolean, true/fals & user profile
+route.post('/deleteTask', check('email').not().isEmpty(), check('task_id').not().isEmpty(), (req, res) => {
+
+    let validat_result = valid_class.valid_chack(req);
+
+    if(validat_result.next().value == false){
+        res.status(422).json({ errors: valid_class.error_valid(validat_result.next().value[0].param) });
+    }else{
+        todo.deleteTask(req.body.email, req.body.task_id).then((data) => {
+            res.status(200).json({isTrue: data});   
+            res.end(); 
+        }).catch((err) => {
+            res.json({isTrue: false, error: err})
+            res.status(500)
+            res.end()
+        });
+    }
+});
 
 module.exports = route
