@@ -14,5 +14,6 @@ router.use('/records',      require('./records'))
 router.use('/statistic',    require('./statistic'))
 router.use('/target',       require('./target'))
 router.use('/notification', require('./notification'))
+router.use('/todo',         require('./todo'))
 
 module.exports = router
