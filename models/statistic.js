@@ -104,3 +104,4 @@ exports.yesterday_records = (coach_mail) => {
         });   
     });
 }
+
