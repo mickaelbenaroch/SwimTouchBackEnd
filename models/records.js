@@ -17,4 +17,19 @@ exports.setRecords = (records) => {
     });
 }
 
+//Details - chack if swimmer and exercise is in record
+exports.chackRecords = (exercise_id, swimmer_id) => {
+    let record = db.get().collection('st-record');
+
+    return new Promise(( res, rej) => {
+        record.find({$and: [{"exercise_id":exercise_id}, {"swimmer.swimmer_id": swimmer_id} ] }).toArray((err, result) => {
+                console.log(result)
+                if(err || result === undefined || result === null || result.length == 0)
+                    rej("error in get records ")
+                else    
+                    res(result)
+        })
+    });
+}
+
 
