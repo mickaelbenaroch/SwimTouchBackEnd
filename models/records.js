@@ -17,6 +17,20 @@ exports.setRecords = (records) => {
     });
 }
 
+//Details - set new records
+exports.getRecords = (records) => {
+    return new Promise(( res, rej) => {
+        let record = db.get().collection('st-record');
+
+        record.find({exercise_id: records.exercise_id}).toArray((err, result) => {
+            if(err || result === undefined || result.length == 0)
+                rej("error to get records")
+            else
+                res(result);
+        });   
+    });
+}
+
 //Details - chack if swimmer and exercise is in record
 exports.chackRecords = (exercise_id, swimmer_id) => {
     let record = db.get().collection('st-record');

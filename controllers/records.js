@@ -31,6 +31,25 @@ route.post('/setrecords',  (req, res) => {
 });
 
 
+//Details - set new records
+//require - none
+//return  - boolean, true\false
+route.post('/getrecord',  (req, res) => {
+    let record = {
+        exercise_id: req.body.exercise_id
+    };
+
+recor.getRecords(record).then((data) => {
+    res.status(200).json({isTrue: data});   
+    res.end(); 
+}).catch((err) => {
+    res.json({isTrue: false, error: err})
+    res.status(500)
+    res.end()
+});
+});
+
+
 //Details - chack if swimmer and exercise is in record
 //require - exercise_id & swimmer_id
 //return  - boolean, true\false
