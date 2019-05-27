@@ -70,7 +70,7 @@ route.post('/teamtarget', (req, res)=>{
         triesToImprove:             req.body.triesToImprove,
         style:                      req.body.style,
         targetTime:                 req.body.targetTime,
-        team_id:                    req.body.team_ref,
+        team_id:                    req.body.team_id,
         date:                       req.body.date,
         done:                       req.body.done,
         notification_has_been_send: req.body.notification_has_been_send
