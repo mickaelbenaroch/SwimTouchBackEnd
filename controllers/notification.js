@@ -39,7 +39,7 @@ route.post('/setNotification', check('swimmer_id').not().isEmpty(), check('messa
     coachmail       = req.body.coachmail,
     date            = req.body.date,
     coachId         = req.body.coachId,
-    priority        = req.body.priority;
+    priority        = req.body.priority,
     type            = req.body.type;
     
     let validat_result = valid_class.valid_chack(req);
