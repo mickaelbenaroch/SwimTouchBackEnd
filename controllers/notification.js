@@ -31,7 +31,7 @@ route.post('/getNotification', check('swimmer_id').not().isEmpty(), (req, res) =
 //require - all fields require except "HasBeenreaded", is false by default and coachmail field.
 //return  - boolean, true/false
 route.post('/setNotification', check('swimmer_id').not().isEmpty(), check('message').not().isEmpty(), check('priority').not().isEmpty(),
-    check('coachmail').not().isEmpty(), check('date').not().isEmpty(),check('title').not().isEmpty(), (req, res) => {
+    check('coachmail').not().isEmpty(), check('date').not().isEmpty(),check('title').not().isEmpty(), check('type').not().isEmpty(), (req, res) => {
 
     let swimmer_id  = req.body.swimmer_id,
     message         = req.body.message,
@@ -40,6 +40,7 @@ route.post('/setNotification', check('swimmer_id').not().isEmpty(), check('messa
     date            = req.body.date,
     coachId         = req.body.coachId,
     priority        = req.body.priority;
+    type            = req.body.type;
     
     let validat_result = valid_class.valid_chack(req);
 
@@ -47,7 +48,7 @@ route.post('/setNotification', check('swimmer_id').not().isEmpty(), check('messa
         res.status(422).json({ errors: valid_class.error_valid(validat_result.next().value[0].param) });
     }else{
         notification.setNotification({"HasBeenreaded": false, "swimmer_id": swimmer_id,"title": title, "message": message, "coachmail": coachmail,
-                                      "date": date, "coachId": coachId, "priority": priority }).then((data) => {
+                                      "date": date, "coachId": coachId, "priority": priority , "type": type}).then((data) => {
             res.status(200).json({isTrue: true,  data});   
             res.end(); 
         }).catch((err) => {
