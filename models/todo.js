@@ -11,7 +11,7 @@ exports.insertTask = (email, message) => {
             let uid  =  Math.random().toString(36).substr(2, 9);
             
             todo.updateOne({"email":email}, {$push: {todo: {id: uid, "message": message}}} ,(err,result) => {
-                if(err || result === undefined || result.length == 0)
+                if(err || result === undefined || result === null || result.length == 0)
                     rej("error to insert task");
                 else
                     res(result)
@@ -29,7 +29,8 @@ exports.getTask = (email) => {
     return new Promise((res, rej) => {
          try {
             todo.findOne({"email": email}, (err, result) => {
-                if(err || result === undefined || result.length == 0)
+                console.log(result)
+                if(err || result === undefined || result === null || result.length == 0)
                     rej("error to get task");
                 else
                     res(result)
@@ -47,7 +48,7 @@ exports.deleteTask = (email, task_id) => {
     return new Promise((res, rej) => {
          try {
             todo.updateOne({"email": email}, {$pull: {todo: {id: task_id}}}, (err, result) => {
-                if(err || result === undefined || result.length == 0)
+                if(err || result === undefined || result === null || result.length == 0)
                     rej("error to delete task");
                 else
                     res(result)

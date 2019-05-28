@@ -9,7 +9,9 @@ exports.getNotification = (obj_notification) => {
 
     return new Promise(( res, rej) => {
         notification.find({swimmer_id: obj_notification}).toArray((err, result) =>{
-            if(err || result === undefined || result.length == 0)
+            if(result.length == 0)
+                res(result);
+            if(err || result === undefined)
                 rej("error to get Notification")
             else
                 res(result);
