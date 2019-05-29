@@ -44,3 +44,18 @@ exports.getProfile = (obj_profile) => {
         });
     });
 }
+
+//Details - get all profiles
+exports.getAllProfile = () => {
+    return new Promise(( res, rej) => {
+        let profile = db.get().collection('profile');
+
+        profile.find().toArray((err, result) =>{
+            if(err || result === undefined || result.length == 0)
+                rej("error to get profiles")
+            else
+                res(result);
+        });
+    });
+}
+
