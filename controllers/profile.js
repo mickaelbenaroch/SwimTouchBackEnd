@@ -79,4 +79,17 @@ route.post('/getProfile', (req, res)=>{
     })
 });
 
+//Details - get all profiles
+//require - none (all fields optional)
+//return  - users profiles array
+route.post('/getAllProfiles', (req, res)=>{
+    profile.getAllProfile().then((data) => {
+        res.status(200).json({isTrue: true, data});   
+        res.end(); 
+    }).catch(err => {
+        res.json({isTrue: false, error: err})
+        res.status(500)
+        res.end()
+    })
+});
 module.exports = route

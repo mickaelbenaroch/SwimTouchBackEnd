@@ -12,10 +12,7 @@ mail    = require('../models/mails');
 //require - swimmer_id
 //return  - swimmer notification
 route.post('/getMails', (req, res) => {
-        let sender = req.body.sender,
-        receiver   = req.body.receiver,
-        title      = req.body.title,
-        body       = req.body.body;
+        let receiver   = req.body.receiver;
 
         mail.getMails(receiver).then((data) => {
             res.status(200).json({isTrue: true,  data});   
@@ -36,9 +33,10 @@ route.post('/setMail', (req, res) => {
     let sender = req.body.sender,
     receiver   = req.body.receiver,
     title      = req.body.title,
-    body       = req.body.body;
+    body       = req.body.body,
+    date       = new Date();
     
-    mail.setMail({"sender": sender, "receiver": receiver,"title": title, "body": body}).then((data) => {
+    mail.setMail({"sender": sender, "receiver": receiver,"title": title, "body": body, "date": date}).then((data) => {
             res.status(200).json({isTrue: true,  data});   
             res.end(); 
         }).catch((err) => {
