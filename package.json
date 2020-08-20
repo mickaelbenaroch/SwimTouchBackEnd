@@ -9,7 +9,7 @@
   "author": "mickael benaroch lior shahar beni valotker nikita bronshtein",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^3.0.4",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.18.3",
     "canvas": "^2.4.1",
     "chai": "^4.2.0",
